@@ -14,6 +14,8 @@ bot.on('message', message => {
     
     var input = message.content.trim().split(" ");
     var command = input.splice(0,1);
+    console.log(input);
+    console.log(command);
     if (input[0] == prefix && message.author.bot != true) 
     {
       switch(command)
