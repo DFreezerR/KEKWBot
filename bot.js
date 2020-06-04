@@ -12,35 +12,39 @@ bot.on('ready', () => {
 
 bot.on('message', message => {
     
-    var input = message.content.trim().split(" ");
-    var command = input.splice(0,1);
-    console.log(input);
-    console.log(command);
-    if (input[0] == prefix && message.author.bot != true) 
+    
+    if(message.author.bot != true)
     {
-      switch(command)
+      var input = message.content.trim().split(" ");
+      var command = input.splice(0,1);
+      console.log(input);
+      console.log(command);
+      if (input[0] == prefix) 
       {
-        case 'count':
-          {
-            message.channel.send("'FUCK YOU'ed "+count+" times.");
-          } break;
-        case 'switch':
-          {
-            working = !working;
-          } break;
-        default:
-          {
-            
-          } break;
-      }
-    }
-    else
-    {
-      if(working && message.author.bot != true)
+        switch(command)
+        {
+          case 'count':
             {
-              message.reply("FUCK YOU");
-              count++;
-            }
+              message.channel.send("'FUCK YOU'ed "+count+" times.");
+            } break;
+          case 'switch':
+            {
+              working = !working;
+            } break;
+          default:
+            {
+            
+            } break;
+        }
+      }
+      else
+      {
+        if(working)
+        {
+          message.reply("FUCK YOU");
+          count++;
+        }
+      }
     }
 
 });
