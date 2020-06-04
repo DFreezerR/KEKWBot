@@ -1,7 +1,9 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+const prefix = "KEKW";
 var working = true;
 var count = 0;
+
 //var fs = require('fs');
 
 bot.on('ready', () => {
@@ -9,11 +11,11 @@ bot.on('ready', () => {
 });
 
 bot.on('message', message => {
-    var prefix = "KEKW ";
-    var input = message.content.substr(0,5);
-    if (input == prefix && message.author.bot != true) 
+    
+    var input = message.content.trim.split(" ");
+    var command = input.splice(0,1);
+    if (input[0] == prefix && message.author.bot != true) 
     {
-      var command = message.content.substr(5, message.content.length-1).trim;
       switch(command)
       {
         case 'count':
