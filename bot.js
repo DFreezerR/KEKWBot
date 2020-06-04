@@ -13,8 +13,11 @@ bot.on('message', message => {
       {
         message.channel.send("'FUCK YOU'ed "+count+" times.");
       }
-      message.reply("FUCK YOU");
-      count++;
+      else
+      {
+        message.reply("FUCK YOU");
+        count++;
+      }
     }
 
 });
