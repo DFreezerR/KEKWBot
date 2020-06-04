@@ -17,8 +17,8 @@ bot.on('message', message => {
     {
       var input = message.content.trim().split(" ");
       var command = input.splice(0,1);
-      console.log(input);
-      console.log(command);
+      console.log("input",{input});
+      console.log("command",command);
       if (input[0] == prefix) 
       {
         switch(command)
