@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 var working = true;
-
+var count = 0;
 //var fs = require('fs');
 
 bot.on('ready', () => {
