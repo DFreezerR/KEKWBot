@@ -32,7 +32,7 @@ bot.on('message', message => {
     }
     else
     {
-      if(working)
+      if(working && message.author.bot != true)
             {
               message.reply("FUCK YOU");
               count++;
