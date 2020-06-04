@@ -12,8 +12,7 @@ bot.on('ready', () => {
 
 bot.on('message', message => {
     
-    var inputRaw = message.content.trim;
-    var input = inputRaw.split(" ");
+    var input = message.content.trim().split(" ");
     var command = input.splice(0,1);
     if (input[0] == prefix && message.author.bot != true) 
     {
