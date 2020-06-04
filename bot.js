@@ -14,15 +14,10 @@ bot.on('message', message => {
     
     if(message.author.bot != true)
     {
-      let input = message.content.trim().split(" ");
+      let inputRaw = message.content.trim();
+      let input = inputRaw.split(" ");
       let command = input.splice(0,1);
-      console.log("input",{input});
-      console.log("command",command);
-      console.log(input[0]);
-      console.log(input[1]);
-      console.log(message.content.trim());
-      console.log(message.content.split(" "));
-      console.log(message.content.split(' '));
+      
       if (input[0] == prefix) 
       {
         switch(command)
