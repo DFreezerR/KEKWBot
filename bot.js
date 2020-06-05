@@ -27,6 +27,8 @@ bot.on('message', message => {
           case 'switch':
             {
               working = !working;
+              let state = working == true ? "on" : "off";
+              message.channel.send("'FUCK YOU' option turned "+ state);
             } break;
           default:
             {
