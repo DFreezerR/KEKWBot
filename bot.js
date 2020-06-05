@@ -14,8 +14,7 @@ bot.on('message', message => {
     
     if(message.author.bot != true)
     {
-      let inputRaw = message.content.trim();
-      let input = inputRaw.split(" ");
+      let input = message.content.split(" ").map(e=>e.trim());
       let command = input.splice(0,1);
       console.log(input[0]);
       console.log(input);
