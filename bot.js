@@ -15,14 +15,10 @@ bot.on('message', message => {
     if(message.author.bot != true)
     {
       let input = message.content.split(" ").map(e=>e.trim());
-      let command = input.splice(0,1);
-      console.log(input[0]);
-      console.log(input);
-      console.log(message.content);
-      console.log(message.content.split(" "));
-      console.log(message.content.split(" ").map(e=>e.trim()));
+      
       if (input[0] == prefix) 
       {
+        let command = input.splice(0,1);
         switch(command)
         {
           case 'count':
