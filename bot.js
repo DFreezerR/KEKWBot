@@ -18,7 +18,6 @@ bot.on('message', message => {
       let input = inputRaw.split(" ");
       let command = input.splice(0,1);
       console.log(input[0]);
-      console.log(inputRaw.split(" "));
       console.log(input);
       if (input[0] == prefix) 
       {
