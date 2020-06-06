@@ -4,9 +4,13 @@ const prefix = "KEKW";
 let working = true;
 let count = 0;
 
-//var fs = require('fs');
+let random = (min, max) =>
+{
+  return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
 
-bot.on('ready', () => {
+bot.on('ready', () => 
+{
   console.log(`Logged in as ${bot.user.tag}!`);
 });
 
@@ -29,6 +33,10 @@ bot.on('message', message => {
               working = !working;
               let state = working == true ? "on" : "off";
               message.channel.send("'FUCK YOU' option turned "+ state);
+            } break;
+            case 'random':
+            {
+              message.channel.send(random(input[2], input[3]));
             } break;
           default:
             {
