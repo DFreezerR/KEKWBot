@@ -6,7 +6,7 @@ let working = true;
 
 let random = (min, max) =>
 {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (+max - +min + 1)) + +min;
 }
 
 bot.on('ready', () => 
@@ -26,7 +26,7 @@ bot.on('message', message => {
         {
           case 'count':
             {
-              message.channel.send("'FUCK YOU'ed "+count+" times.");
+              message.channel.send("'FUCK YOU'ed "+config.count+" times.");
             } break;
           case 'switch':
             {
