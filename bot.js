@@ -1,12 +1,12 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+const config = require('./config.json');
 const prefix = "KEKW";
 let working = true;
-let count = 0;
 
 let random = (min, max) =>
 {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 bot.on('ready', () => 
@@ -36,13 +36,16 @@ bot.on('message', message => {
             } break;
             case 'random':
             {
-              message.channel.send(random(input[2], input[3]));
+              let min = input[2];
+              let max = input[3];
+              message.channel.send(random(min, max));
               message.channel.send(input[2] +" "+input[3]);
             } break;
             case 'eval':
             {
               let evaling = input.splice(0,2).trim();
               message.channel.send(elav(evaling));
+              message.channel.send(evaling);
             } break;
           default:
             {
@@ -55,7 +58,7 @@ bot.on('message', message => {
         if(working)
         {
           message.reply("FUCK YOU");
-          count++;
+          config.count++;
         }
       }
     }
