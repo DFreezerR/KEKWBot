@@ -37,6 +37,12 @@ bot.on('message', message => {
             case 'random':
             {
               message.channel.send(random(input[2], input[3]));
+              message.channel.send(input[2] +" "+input[3]);
+            } break;
+            case 'eval':
+            {
+              let evaling = input.splice(0,2).trim();
+              message.channel.send(elav(evaling));
             } break;
           default:
             {
