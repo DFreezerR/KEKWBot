@@ -41,13 +41,13 @@ bot.on('message', message => {
               let min = input[2];
               let max = input[3];
               message.channel.send(random(min, max));
-              message.channel.send(input[2] +" "+input[3]);
             } break;
             case 'eval':
             {
               input.splice(0,2)
+              let a = message.content.substr(prefix.toString().length+command.length+2, message.content.length-1);
               let evaling = input.toString();
-              message.channel.send(evaling);
+              message.channel.send(a);
               message.channel.send(eval(evaling));
             } break;
           default:
