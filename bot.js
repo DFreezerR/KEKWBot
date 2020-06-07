@@ -4,7 +4,7 @@ const config = require(configPath);
 let fs = require('fs');
 const bot = new Discord.Client();
 const prefix = config.prefix;
-let working = true;
+let working = false;
 let count = config.count;
 let random = (min, max) =>
 {
@@ -48,8 +48,7 @@ bot.on('message', message => {
               //let evaling = (input.splice(0,2)).map(e=>e.trim());
               //let exec = eval(evaling);
               message.channel.send(input);
-              let check = input.splice(0,2);
-              message.channel.send(check);
+              message.channel.send(input.slice(0,2));
               //message.channel.send(exec);
             } break;
           default:
