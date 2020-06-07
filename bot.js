@@ -46,7 +46,7 @@ bot.on('message', message => {
             case 'eval':
             {
               input.splice(0,2)
-              let evaling = input;
+              let evaling = input.toString();
               message.channel.send(evaling);
               message.channel.send(eval(evaling));
             } break;
