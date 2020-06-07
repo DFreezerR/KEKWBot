@@ -46,9 +46,7 @@ bot.on('message', message => {
             {
               input.splice(0,2)
               let a = message.content.substr(prefix.toString().length+command.length+2, message.content.length-1);
-              //let evaling = input.toString();
-              message.channel.send(a);
-              //message.channel.send(eval(evaling));
+              message.channel.send(eval(a));
             } break;
           default:
             {
