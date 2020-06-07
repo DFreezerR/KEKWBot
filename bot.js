@@ -63,7 +63,7 @@ bot.on('message', message => {
           message.reply("FUCK YOU");
           count++;
           
-          fs.writeFile(configPath, JSON.stringify(config, null, 2));
+          fs.writeFile(configPath, JSON.stringify(config, null, 2), (err) => {if (err) throw err });
         }
       }
     }
