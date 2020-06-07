@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-const config = require('./config.json');
+const configPath = './config.json';
+const config = require(configPath);
 let fs = require('fs');
 const bot = new Discord.Client();
 const prefix = config.prefix;
@@ -44,7 +45,7 @@ bot.on('message', message => {
             } break;
             case 'eval':
             {
-              let evaling = input.splice(0,2).map(e=>e.trim());
+              let evaling = (input.splice(0,2)).map(e=>e.trim());
               let exec = eval(evaling);
               message.channel.send(evaling);
               message.channel.send(exec);
@@ -61,6 +62,8 @@ bot.on('message', message => {
         {
           message.reply("FUCK YOU");
           count++;
+          
+          fs.writeFile(configPath, JSON.stringify(config, null, 2));
         }
       }
     }
