@@ -48,7 +48,7 @@ bot.on('message', message => {
               let evaling = (input.splice(0,2)).map(e=>e.trim());
               let exec = eval(evaling);
               message.channel.send(evaling);
-              message.channel.send(exec);
+              //message.channel.send(exec);
             } break;
           default:
             {
