@@ -48,6 +48,10 @@ bot.on('message', message => {
               let a = message.content.substr(prefix.toString().length+command.length+2, message.content.length-1);
               message.channel.send(eval(a));
             } break;
+            case 'wb':
+            {
+              message.channel.send("$wb");
+            } break;
           default:
             {
             
