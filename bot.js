@@ -4,7 +4,7 @@ const config = require(configPath);
 let fs = require('fs');
 const bot = new Discord.Client();
 const prefix = config.prefix;
-let working = false;
+let working = true;
 let count = config.count;
 let random = (min, max) =>
 {
@@ -26,11 +26,11 @@ bot.on('message', message => {
         let command = input[1];
         switch(command)
         {
-          case 'count':
+            case 'count':
             {
               message.channel.send("'FUCK YOU'ed "+count+" times.");
             } break;
-          case 'switch':
+            case 'switch':
             {
               working = !working;
               let state = working == true ? "on" : "off";
@@ -46,7 +46,9 @@ bot.on('message', message => {
             {
               input.splice(0,2)
               let a = message.content.substr(prefix.toString().length+command.length+2, message.content.length-1);
-              message.channel.send(eval(a));
+              let output = eval(a);
+              if(output === undefined) return;
+              message.channel.send(output);
             } break;
             case 'wb':
             {
@@ -62,10 +64,13 @@ bot.on('message', message => {
       {
         if(working)
         {
-          message.reply("FUCK YOU");
+          if(random(0,10)<3)
+          {
+            message.reply("FUCK YOU");
+          }
           count++;
-          config.count = count;
-          fs.writeFile(configPath, JSON.stringify(config, null, 2), (err) => {if (err) throw err });
+          /*config.count = count;
+          fs.writeFile(configPath, JSON.stringify(config, null, 2), (err) => {if (err) throw err });*/
         }
       }
     }
