@@ -85,6 +85,7 @@ bot.on('message', message => {
                   }
                 })();
               }
+              sendRandomPic();
             } break;
           default:
             {
