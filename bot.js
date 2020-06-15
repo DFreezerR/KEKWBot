@@ -25,7 +25,6 @@ let getImgurId = (length) =>
 let getImgurURL = () =>
 {
   let id = getImgurId(random(5,6));
-  let filename = id + ".jpg";
   let url = "http://i.imgur.com/" + id;
   
   (async () => {
@@ -33,13 +32,7 @@ let getImgurURL = () =>
     
     if(exists)
     {
-      console.log("true "+url);
       return url;
-    }
-    else
-    {
-      console.log("false "+url);
-      getImgurURL();
     }
     
   })();
@@ -85,10 +78,9 @@ bot.on('message', async message => {
             } break;
             case 'pic':
             {
-              let file = await getImgurURL();
               let waitForElement = () => 
               {
-                console.log(file);
+                let file = await getImgurURL();
                 if(typeof file !== "undefined")
                 {
                   console.log("file found");
