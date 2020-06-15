@@ -30,13 +30,15 @@ let getImgurURL = () =>
   
   (async () => {
     const exists = await urlExist(url);
-    console.log(exists+" "+url);
+    
     if(exists)
     {
+      console.log("true "+url);
       return url;
     }
     else
     {
+      console.log("false "+url);
       getImgurURL();
     }
     
