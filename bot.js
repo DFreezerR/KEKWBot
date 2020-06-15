@@ -84,7 +84,7 @@ bot.on('message', async message => {
             case 'pic':
             {
               let file = await getImgurURL();
-              message.channel.send("", {files: [url.toString()]});
+              message.channel.send("", {files: [file.toString()]});
             } break;
           default:
             {
