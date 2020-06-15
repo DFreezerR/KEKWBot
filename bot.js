@@ -88,6 +88,7 @@ bot.on('message', async message => {
               let file = await getImgurURL();
               let waitForElement = () => 
               {
+                console.log(file);
                 if(typeof file !== "undefined")
                 {
                   console.log("file found");
