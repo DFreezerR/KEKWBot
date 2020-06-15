@@ -30,6 +30,7 @@ let getImgurURL = () =>
   
   (async () => {
     const exists = await urlExist(url);
+    console.log(exists+" "+url);
     if(exists)
     {
       return url;
@@ -38,7 +39,7 @@ let getImgurURL = () =>
     {
       getImgurURL();
     }
-    console.log(exists+" "+url);
+    
   })();
 }
 bot.on('ready', () => 
