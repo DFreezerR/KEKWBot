@@ -75,7 +75,15 @@ bot.on('message', message => {
                   const exists = await urlExist(url);
                   if(exists)
                   {
-                    message.channel.send("Your image", {files: [url.toString()]});
+                    let embed = Discord.MessageEmbed()
+                    .setColor('#FFFF00')
+                    .setTitle('Your image')
+                    .setAuthor('Devoto')
+                    .setDescription('Random image from Imgur')
+                    .setImage(url+'.jpg')
+                    .setTimestamp()
+                    .setFooter('OWO');
+                    message.channel.send(embed);
                   }
                   else
                   {
