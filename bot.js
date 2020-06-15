@@ -24,18 +24,7 @@ let getImgurId = (length) =>
 }
 let getImgurURL = () =>
 {
-  let id = getImgurId(random(5,6));
-  let url = "http://i.imgur.com/" + id;
   
-  (async () => {
-    const exists = await urlExist(url);
-    
-    if(exists)
-    {
-      return url;
-    }
-    
-  })();
 }
 bot.on('ready', () => 
 {
@@ -78,20 +67,22 @@ bot.on('message', message => {
             } break;
             case 'pic':
             {
-              let waitForElement = async() => 
+              let sendRandomPic = () =>
               {
-                let file = await getImgurURL();
-                if(typeof file !== "undefined")
-                {
-                  console.log("file found");
-                  message.channel.send("Your image", {files: [file.toString()]});
-                }
-                else
-                {
-                    setTimeout(waitForElement, 250);
-                }
+                let id = getImgurId(random(5,6));
+                let url = "http://i.imgur.com/" + id;
+                (async () => {
+                  const exists = await urlExist(url);
+                  if(exists)
+                  {
+                    message.channel.send("Your image", {files: [url.toString()]});
+                  }
+                  else
+                  {
+                    sendRandomPic();
+                  }
+                })();
               }
-              waitForElement();
             } break;
           default:
             {
@@ -108,8 +99,7 @@ bot.on('message', message => {
             message.reply("FUCK YOU");
           }
           count++;
-          /*config.count = count;
-          fs.writeFile(configPath, JSON.stringify(config, null, 2), (err) => {if (err) throw err });*/
+          
         }
       }
     }
