@@ -88,7 +88,8 @@ bot.on('message', async message => {
               {
                 if(typeof file !== "undefined")
                 {
-                  message.channel.send("", {files: [file.toString()]});
+                  console.log("file found");
+                  message.channel.send("Your image", {files: [file.toString()]});
                 }
                 else{
                     setTimeout(waitForElement, 250);
