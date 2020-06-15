@@ -75,7 +75,7 @@ bot.on('message', message => {
                   const exists = await urlExist(url);
                   if(exists)
                   {
-                    let embed = Discord.MessageEmbed()
+                    let embed = new Discord.MessageEmbed()
                     .setColor('#FFFF00')
                     .setTitle('Your image')
                     .setAuthor('Devoto')
