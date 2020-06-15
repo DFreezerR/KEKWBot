@@ -42,7 +42,7 @@ bot.on('ready', () =>
   console.log(`Logged in as ${bot.user.tag}!`);
 });
 
-bot.on('message', async message => {
+bot.on('message', message => {
     
     if(message.author.bot != true)
     {
@@ -78,7 +78,7 @@ bot.on('message', async message => {
             } break;
             case 'pic':
             {
-              let waitForElement = () => 
+              let waitForElement = async() => 
               {
                 let file = await getImgurURL();
                 if(typeof file !== "undefined")
