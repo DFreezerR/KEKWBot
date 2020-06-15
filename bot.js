@@ -84,7 +84,16 @@ bot.on('message', async message => {
             case 'pic':
             {
               let file = await getImgurURL();
-              message.channel.send("", {files: [file.toString()]});
+              let waitForElement = () => 
+              {
+                if(typeof file !== "undefined")
+                {
+                  message.channel.send("", {files: [file.toString()]});
+                }
+                else{
+                    setTimeout(waitForElement, 250);
+                }
+            }
             } break;
           default:
             {
