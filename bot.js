@@ -75,7 +75,7 @@ bot.on('message', message => {
                   const exists = await urlExist(url);
                   if(exists)
                   {
-                    message.channel.send("Your image", {files: url.toString()});
+                    message.channel.send("Your image", {file: [url.toString()]});
                   }
                   else
                   {
