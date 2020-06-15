@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const urlExist = require("url-exist");
 const configPath = './config.json';
 const config = require(configPath);
 let fs = require('fs');
@@ -10,7 +11,36 @@ let random = (min, max) =>
 {
   return Math.floor(Math.random() * (+max - +min + 1)) + +min;
 }
-
+let getImgurId = (length) => 
+{
+  let result = '';
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let charactersLength = characters.length;
+  for (let i = 0; i < length; i++ ) 
+  {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+let getImgurURL = () =>
+{
+  let id = getImgurId(random(5,6));
+  let filename = id + ".jpg";
+  let url = "http://i.imgur.com/" + id;
+  
+  (async () => {
+    const exists = await urlExist(url);
+    if(exists)
+    {
+      return url;
+    }
+    else
+    {
+      getImgurURL();
+    }
+    console.log(exists+" "+url);
+  })();
+}
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
@@ -50,9 +80,10 @@ bot.on('message', message => {
               if(output === undefined) return;
               message.channel.send(output);
             } break;
-            case 'wb':
+            case 'pic':
             {
-              message.channel.send("$wb");
+              let file = getImgurURL();
+              message.channel.send("", {files: [url.toString()]});
             } break;
           default:
             {
