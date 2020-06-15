@@ -91,10 +91,12 @@ bot.on('message', async message => {
                   console.log("file found");
                   message.channel.send("Your image", {files: [file.toString()]});
                 }
-                else{
+                else
+                {
                     setTimeout(waitForElement, 250);
                 }
-            }
+              }
+              waitForElement();
             } break;
           default:
             {
