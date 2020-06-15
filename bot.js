@@ -46,7 +46,7 @@ bot.on('ready', () =>
   console.log(`Logged in as ${bot.user.tag}!`);
 });
 
-bot.on('message', message => {
+bot.on('message', async message => {
     
     if(message.author.bot != true)
     {
