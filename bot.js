@@ -75,10 +75,12 @@ bot.on('message', message => {
                   const exists = await urlExist(url);
                   if(exists)
                   {
+                    console.log("true "+url);
                     message.channel.send("Your image", {files: [url.toString()]});
                   }
                   else
                   {
+                    console.log("false "+url);
                     sendRandomPic();
                   }
                 })();
