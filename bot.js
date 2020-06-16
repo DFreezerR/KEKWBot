@@ -69,7 +69,7 @@ bot.on('message', message => {
             {
               let sendRandomPic = () =>
               {
-                let id = getImgurId(random(5,6));
+                let id = getImgurId(random(5,7));
                 let url = "http://i.imgur.com/" + id;
                 (async () => {
                   const exists = await urlExist(url);
