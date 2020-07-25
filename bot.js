@@ -51,7 +51,10 @@ bot.on('message', message => {
             case 'chance':
             {
               let value = input[2];
-              value = value.pop();
+              if(value[value.length-1] == "%")
+              {
+                value = value.slice(0,-1);
+              }
               chance = value;
               message.reply('You changed the probability of being "FUCK YOU"ed to '+value+'%!');
 
