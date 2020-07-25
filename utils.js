@@ -1,4 +1,4 @@
-let help = 'count - display number of times people got "FUCK YOU"ed\nswitch - turn off "FUCK YOU" option\npic - post random image from Imgur\nrandom - get random value between two numbers(usage: KEKW random "1st number" "2nd number")\nhelp - show help list';
+let help = '**count**: display number of times people got "FUCK YOU"ed\n**chance**: set chance of getting "FUCK YOU"ed (e.g KEKW chance 20%)\n**switch**: turn off "FUCK YOU" option\n**pic**: post random image from Imgur\n**random**: get random value between two numbers(e.g KEKW random 1 100)\n**help**: show help list';
 let random = (min, max) =>
 {
   return Math.floor(Math.random() * (+max - +min + 1)) + +min;

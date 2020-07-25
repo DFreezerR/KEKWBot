@@ -8,7 +8,7 @@ const bot = new Discord.Client();
 const prefix = config.prefix;
 let working = true;
 let count = config.count;
-
+let chance = config.chance;
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
@@ -48,11 +48,19 @@ bot.on('message', message => {
               if(output === undefined) return;
               message.channel.send(output);
             } break;
+            case 'chance':
+            {
+              let value = input[2];
+              value = value.pop();
+              chance = value;
+              message.reply('You changed the probability of being "FUCK YOU"ed to '+value+'%!');
+
+            } break;
             case 'pic':
             {
               let sendRandomPic = () =>
               {
-                let id = utils.getImgurId(random(5,7));
+                let id = utils.getImgurId(utils.random(5,7));
                 let url = "http://i.imgur.com/" + id;
                 (async () => {
                   const exists = await urlExist(url);
@@ -78,7 +86,7 @@ bot.on('message', message => {
             } break;
             case 'help':
             {
-              message.reply(utils.help);
+              message.send(utils.help);
             } break;
           default:
             {
@@ -90,7 +98,7 @@ bot.on('message', message => {
       {
         if(working)
         {
-          if(utils.random(0,100)<20)
+          if(utils.random(0,100)<=chance)
           {
             message.reply("FUCK YOU");
           }
