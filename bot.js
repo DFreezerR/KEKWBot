@@ -1,31 +1,14 @@
 const Discord = require('discord.js');
 const urlExist = require("url-exist");
 const configPath = './config.json';
+const utils = require('./utils');
 const config = require(configPath);
 let fs = require('fs');
 const bot = new Discord.Client();
 const prefix = config.prefix;
 let working = true;
 let count = config.count;
-let random = (min, max) =>
-{
-  return Math.floor(Math.random() * (+max - +min + 1)) + +min;
-}
-let getImgurId = (length) => 
-{
-  let result = '';
-  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let charactersLength = characters.length;
-  for (let i = 0; i < length; i++ ) 
-  {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
-let getImgurURL = () =>
-{
-  
-}
+
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
@@ -69,7 +52,7 @@ bot.on('message', message => {
             {
               let sendRandomPic = () =>
               {
-                let id = getImgurId(random(5,7));
+                let id = utils.getImgurId(random(5,7));
                 let url = "http://i.imgur.com/" + id;
                 (async () => {
                   const exists = await urlExist(url);
@@ -103,7 +86,7 @@ bot.on('message', message => {
       {
         if(working)
         {
-          if(random(0,10)<3)
+          if(utils.random(0,100)<20)
           {
             message.reply("FUCK YOU");
           }
