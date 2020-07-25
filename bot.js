@@ -38,7 +38,7 @@ bot.on('message', message => {
             {
               let min = input[2];
               let max = input[3];
-              message.channel.send(random(min, max));
+              message.channel.send(utils.random(min, max));
             } break;
             case 'eval':
             {
@@ -75,6 +75,10 @@ bot.on('message', message => {
                 })();
               }
               sendRandomPic();
+            } break;
+            case 'help':
+            {
+              message.reply(utils.help);
             } break;
           default:
             {
