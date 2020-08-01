@@ -89,7 +89,7 @@ bot.on('message', message => {
             } break;
             case 'help':
             {
-              message.send(utils.help);
+              message.channel.send(utils.help);
             } break;
           default:
             {
