@@ -103,7 +103,7 @@ bot.on('message', message => {
         {
           if(utils.random(0,100)<=chance)
           {
-            message.reply("FUCK YOU");
+            message.reply("FUCK YOU" + message.member);
           }
           count++;
           
