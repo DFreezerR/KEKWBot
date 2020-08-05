@@ -9,6 +9,7 @@ const prefix = config.prefix;
 let working = true;
 let count = config.count;
 let chance = config.chance;
+let mode = "normal";
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
@@ -59,6 +60,11 @@ bot.on('message', message => {
               message.reply('You changed the probability of being "FUCK YOU"ed to '+value+'%!');
 
             } break;
+            case 'display':
+            {
+              message.channel.send('The probability of being "FUCK YOU"ed is '+chance+'%!');
+
+            } break;
             case 'pic':
             {
               let sendRandomPic = () =>
@@ -91,6 +97,26 @@ bot.on('message', message => {
             {
               message.channel.send(utils.help);
             } break;
+            case 'switch':
+              {
+                switch(input[2])
+                {
+                  case 'normal':
+                    {
+                      mode = "normal";
+                      message.reply('Changed to normal mode');
+                    }break;
+                  case 'special':
+                    {
+                      mode = "special";
+                      message.reply('Changed to special mode');
+                    }break;
+                  default:
+                    {
+                      message.reply("Wrong mode!");
+                    } break;
+                }
+              } break;
           default:
             {
             
@@ -99,7 +125,7 @@ bot.on('message', message => {
       }
       else
       {
-        if(working && message.member.user.tag == "vaytvi#4838")
+        if(working && message.member.user.tag == "vaytvi#4838" && mode == "special")
         {
           if(utils.random(0,100)<=chance)
           {
@@ -107,6 +133,14 @@ bot.on('message', message => {
           }
           count++;
           
+        }
+        if(working && mode == "normal")
+        {
+          if(utils.random(0,100)<=chance)
+          {
+            message.reply("FUCK YOU");
+          }
+          count++;
         }
       }
     }
