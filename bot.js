@@ -99,11 +99,11 @@ bot.on('message', message => {
       }
       else
       {
-        if(working)
+        if(working && message.member.user.tag == "vaytvi#4838")
         {
           if(utils.random(0,100)<=chance)
           {
-            message.reply("FUCK YOU " + message.member.user.tag);
+            message.reply("FUCK YOU");
           }
           count++;
           
