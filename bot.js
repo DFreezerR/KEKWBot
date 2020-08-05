@@ -97,7 +97,7 @@ bot.on('message', message => {
             {
               message.channel.send(utils.help);
             } break;
-            case 'switch':
+            case 'mode':
               {
                 switch(input[2])
                 {
