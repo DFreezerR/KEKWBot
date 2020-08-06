@@ -157,7 +157,7 @@ bot.on('message', message => {
       }
       if(utils.random(0,100)<=react)
       {
-        message.react(utils.getRandomEmote());
+        message.react(utils.getRandomReactEmote());
       }
       if(utils.random(0,100)<=react)
       {

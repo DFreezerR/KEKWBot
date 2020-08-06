@@ -16,6 +16,20 @@ let getImgurId = (length) =>
 }
 let emotes = 
 {
+  KEKW: "<:KEKW:708697210711310460>",
+  YEP: "<:YEP:710828915828064287>",
+  Pepega: "<:Pepega:736925908706787399>",
+  key: function(n) 
+  {
+    return this[Object.keys(this)[n]];
+  },
+  keys: function()
+  {
+    return Object.keys(this).length;
+  }
+}
+let reactEmotes = 
+{
   KEKW: "708697210711310460",
   YEP: "710828915828064287",
   Pepega: "736925908706787399",
@@ -32,8 +46,14 @@ let getRandomEmote = () =>
 {
   return emotes.key(random(0,2));
 }
+let getRandomReactEmote = () =>
+{
+  return reactEmotes.key(random(0,2));
+}
 exports.random = random;
 exports.getImgurId = getImgurId;
 exports.help = help;
 exports.emotes = emotes;
 exports.getRandomEmote = getRandomEmote;
+exports.reactEmotes = reactEmotes;
+exports.getRandomReactEmote = getRandomReactEmote;
