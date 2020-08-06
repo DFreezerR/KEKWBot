@@ -9,6 +9,7 @@ const prefix = config.prefix;
 let working = true;
 let count = config.count;
 let chance = config.chance;
+let react = config.react;
 let mode = "normal";
 bot.on('ready', () => 
 {
@@ -58,6 +59,17 @@ bot.on('message', message => {
               }
               chance = value;
               message.reply('You changed the probability of being "FUCK YOU"ed to '+value+'%!');
+
+            } break;
+            case 'react':
+            {
+              let value = input[2];
+              if(value[value.length-1] == "%")
+              {
+                value = value.slice(0,-1);
+              }
+              react = value;
+              message.reply('You changed the probability of being reacted to '+value+'%!');
 
             } break;
             case 'display':
@@ -143,13 +155,14 @@ bot.on('message', message => {
           count++;
         }
       }
-      if(utils.random(0,100)<=50)
+      if(utils.random(0,100)<=react)
       {
         message.react(utils.getRandomEmote());
       }
-      if(utils.random(0,100)<=50)
+      if(utils.random(0,100)<=react)
       {
         message.reply(utils.getRandomEmote());
+      }
     }
 
 });

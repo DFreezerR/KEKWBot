@@ -1,5 +1,6 @@
 {
     "count": 1,
     "prefix":"KEKW",
-    "chance":10
+    "chance":10,
+    "react":10
 }
