@@ -30,7 +30,7 @@ let emotes =
 }
 let getRandomEmote = () =>
 {
-  return emotes.key(random(0,emotes.keys-3));
+  return emotes.key(random(0,2));
 }
 exports.random = random;
 exports.getImgurId = getImgurId;

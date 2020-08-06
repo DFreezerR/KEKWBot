@@ -151,8 +151,6 @@ bot.on('message', message => {
       {
         //message.reply(utils.getRandomEmote());
         console.log(utils.getRandomEmote());
-        console.log(utils.emotes.keys());
-        console.log(utils.emotes.key(0));
         console.log(utils.emotes.key(utils.random(0,2)));
       }
     }
