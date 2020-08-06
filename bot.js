@@ -32,9 +32,16 @@ bot.on('message', message => {
             } break;
             case 'switch':
             {
-              working = !working;
-              let state = working == true ? "on" : "off";
-              message.channel.send("'FUCK YOU' option turned "+ state);
+              if(message.member.roles.find(e=>e.name == "OWO" || e.name == "DJ"))
+              {
+                working = !working;
+                let state = working == true ? "on" : "off";
+                message.channel.send("'FUCK YOU' option turned "+ state);
+              }
+              else
+              {
+
+              }
             } break;
             case 'random':
             {
@@ -52,24 +59,38 @@ bot.on('message', message => {
             } break;
             case 'chance':
             {
-              let value = input[2];
-              if(value[value.length-1] == "%")
+              if(message.member.roles.find(e=>e.name == "OWO" || e.name == "DJ"))
               {
-                value = value.slice(0,-1);
+                let value = input[2];
+                if(value[value.length-1] == "%")
+                {
+                  value = value.slice(0,-1);
+                }
+                chance = value;
+                message.reply('You changed the probability of being "FUCK YOU"ed to '+value+'%!');
               }
-              chance = value;
-              message.reply('You changed the probability of being "FUCK YOU"ed to '+value+'%!');
+              else
+              {
+                message.reply('You do not have permissions to do this!');
+              }
 
             } break;
             case 'react':
             {
-              let value = input[2];
-              if(value[value.length-1] == "%")
+              if(message.member.roles.find(e=>e.name == "OWO" || e.name == "DJ"))
               {
-                value = value.slice(0,-1);
+                let value = input[2];
+                if(value[value.length-1] == "%")
+                {
+                  value = value.slice(0,-1);
+                }
+                react = value;
+                message.reply('You changed the probability of being reacted to '+value+'%!');
               }
-              react = value;
-              message.reply('You changed the probability of being reacted to '+value+'%!');
+              else
+              {
+                message.reply('You do not have permissions to do this!');
+              }
 
             } break;
             case 'display':
@@ -111,8 +132,10 @@ bot.on('message', message => {
             } break;
             case 'mode':
               {
-                switch(input[2])
+                if(message.member.roles.find(e=>e.name == "OWO" || e.name == "DJ"))
                 {
+                  switch(input[2])
+                  {
                   case 'normal':
                     {
                       mode = "normal";
@@ -127,6 +150,11 @@ bot.on('message', message => {
                     {
                       message.reply("Wrong mode!");
                     } break;
+                  }
+                }
+                else
+                {
+                  message.reply('You do not have permissions to do this!');
                 }
               } break;
           default:
