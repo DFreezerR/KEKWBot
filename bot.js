@@ -74,7 +74,7 @@ bot.on('message', message => {
             } break;
             case 'display':
             {
-              message.channel.send('The probability of being "FUCK YOU"ed is '+chance+'%!');
+              message.channel.send('The probability of being "FUCK YOU"ed is '+chance+'%!\nThe probability of being reacteded is '+react+'%!');
 
             } break;
             case 'pic':

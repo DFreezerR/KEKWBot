@@ -16,9 +16,9 @@ let getImgurId = (length) =>
 }
 let emotes = 
 {
-  KEKW: "<:KEKW:708697210711310460>",
-  YEP: "<:YEP:710828915828064287>",
-  Pepega: "<:Pepega:736925908706787399>",
+  KEKW: "708697210711310460",
+  YEP: "710828915828064287",
+  Pepega: "736925908706787399",
   key: function(n) 
   {
     return this[Object.keys(this)[n]];
