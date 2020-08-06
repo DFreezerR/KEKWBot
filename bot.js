@@ -145,11 +145,14 @@ bot.on('message', message => {
       }
       if(utils.random(0,100)<=50)
       {
-        message.react(utils.getRandomEmote());
+        //message.react(utils.getRandomEmote());
       }
       if(utils.random(0,100)<=50)
       {
-        message.reply(utils.getRandomEmote());
+        //message.reply(utils.getRandomEmote());
+        console.log(utils.getRandomEmote());
+        console.log(utils.emotes.keys());
+        console.log(utils.emotes.key(0));
       }
     }
 
