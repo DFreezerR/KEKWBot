@@ -145,7 +145,7 @@ bot.on('message', message => {
       }
       if(utils.random(0,100)<=50)
       {
-        message.react(utils.emotes[utils.random(0, utils.emotes.length-1)]);
+        message.react(utils.emotes[utils.random(0, Object.keys(utils.emotes).length-1)]);
       }
       if(utils.random(0,100)<=50)
       {
