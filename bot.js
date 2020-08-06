@@ -17,7 +17,7 @@ bot.on('ready', () =>
 });
 
 bot.on('message', message => {
-    
+    let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
     if(message.author.bot != true)
     {
       let input = message.content.split(" ").map(e=>e.trim());
@@ -59,7 +59,7 @@ bot.on('message', message => {
             } break;
             case 'chance':
             {
-              if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
+              if(allowedRole)
               {
                 let value = input[2];
                 if(value[value.length-1] == "%")
@@ -77,7 +77,7 @@ bot.on('message', message => {
             } break;
             case 'react':
             {
-              if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
+              if(allowedRole)
               {
                 let value = input[2];
                 if(value[value.length-1] == "%")
@@ -132,7 +132,7 @@ bot.on('message', message => {
             } break;
             case 'mode':
               {
-                if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
+                if(allowedRole)
                 {
                   switch(input[2])
                   {
