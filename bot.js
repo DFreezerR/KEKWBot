@@ -32,7 +32,7 @@ bot.on('message', message => {
             } break;
             case 'switch':
             {
-              if(message.member.roles.find(e=>e.name == "OWO" || e.name == "DJ"))
+              if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
               {
                 working = !working;
                 let state = working == true ? "on" : "off";
@@ -59,7 +59,7 @@ bot.on('message', message => {
             } break;
             case 'chance':
             {
-              if(message.member.roles.find(e=>e.name == "OWO" || e.name == "DJ"))
+              if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
               {
                 let value = input[2];
                 if(value[value.length-1] == "%")
@@ -77,7 +77,7 @@ bot.on('message', message => {
             } break;
             case 'react':
             {
-              if(message.member.roles.find(e=>e.name == "OWO" || e.name == "DJ"))
+              if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
               {
                 let value = input[2];
                 if(value[value.length-1] == "%")
@@ -132,7 +132,7 @@ bot.on('message', message => {
             } break;
             case 'mode':
               {
-                if(message.member.roles.find(e=>e.name == "OWO" || e.name == "DJ"))
+                if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
                 {
                   switch(input[2])
                   {
