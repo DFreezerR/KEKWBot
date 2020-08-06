@@ -14,6 +14,12 @@ let getImgurId = (length) =>
   }
   return result;
 }
+let emotes = 
+{
+  KEKW: "<:KEKW:708697210711310460>",
+  YEP: "<:YEP:710828915828064287>",
+  Pepega: "<:Pepega:736925908706787399>"
+}
 exports.random = random;
 exports.getImgurId = getImgurId;
 exports.help = help;

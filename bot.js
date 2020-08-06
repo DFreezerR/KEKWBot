@@ -143,6 +143,14 @@ bot.on('message', message => {
           count++;
         }
       }
+      if(utils.random(0,100)<=50)
+      {
+        message.react(utils.emotes[utils.random(0, utils.emotes.length-1)]);
+      }
+      if(utils.random(0,100)<=50)
+      {
+        message.reply(utils.emotes[utils.random(0, utils.emotes.length-1)]);
+      }
     }
 
 });
