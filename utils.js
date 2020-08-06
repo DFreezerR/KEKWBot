@@ -30,8 +30,7 @@ let emotes =
 }
 let getRandomEmote = () =>
 {
-  let length = Object.keys(emotes).length;
-  return emotes.key(random(0,emotes.keys));
+  return emotes.key(random(0,emotes.keys-3));
 }
 exports.random = random;
 exports.getImgurId = getImgurId;
