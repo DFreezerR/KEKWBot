@@ -11,6 +11,7 @@ let count = config.count;
 let chance = config.chance;
 let react = config.react;
 let mode = "normal";
+let active = false;
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
@@ -157,6 +158,16 @@ bot.on('message', message => {
                   message.reply('You do not have permissions to do this!');
                 }
               } break;
+              case 'ping':
+                {
+
+                  let who = input[2];
+                  active = !active;
+                  while(active)
+                  {
+                    message.channel.send(who);
+                  }
+                } break;
           default:
             {
             
