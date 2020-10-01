@@ -12,7 +12,7 @@ let chance = config.chance;
 let react = config.react;
 let mode = "normal";
 let active = false;
-let banHorny = ['horny','хорни','нorny','hоrny','hornу','ноrny','ноrnу','hоrnу','h0rny','х0рни','xорни','хоpни','хорhи','xopни'];
+let banHorny = ['horny','хорни','нorny','hоrny','hornу','ноrny','ноrnу','hоrnу','h0rny','х0рни','xорни','хоpни','хорhи','xopни','h◌rny','hогnу'];
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
@@ -22,7 +22,7 @@ bot.on('message', message => {
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
     if(message.author.bot != true)
     {
-      if(banHorny.includes(message.content.toLowerCase()))
+      if(banHorny.forEach((e)=>message.content.toLowerCase().includes(e)))
       {
         message.delete();
         return;
