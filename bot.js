@@ -24,6 +24,7 @@ bot.on('message', message => {
       if(message.content.includes('horny'))
       {
         message.delete();
+        return;
       }
       let input = message.content.split(" ").map(e=>e.trim());
       if (input[0] == prefix) 
