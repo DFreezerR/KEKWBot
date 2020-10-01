@@ -21,6 +21,10 @@ bot.on('message', message => {
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
     if(message.author.bot != true)
     {
+      if(message.content.includes('horny'))
+      {
+        message.delete();
+      }
       let input = message.content.split(" ").map(e=>e.trim());
       if (input[0] == prefix) 
       {
