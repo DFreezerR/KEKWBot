@@ -22,11 +22,16 @@ bot.on('message', message => {
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
     if(message.author.bot != true)
     {
-      if(banHorny.forEach((e)=>message.content.toLowerCase().includes(e)))
+      banHorny.forEach((e)=>
       {
-        message.delete();
-        return;
-      }
+        if(message.content.toLowerCase().includes(e))
+        {
+          message.delete();
+          return;
+        }
+      
+      });
+      
       let input = message.content.split(" ").map(e=>e.trim());
       if (input[0] == prefix) 
       {
