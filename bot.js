@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const urlExist = require("url-exist");
+const request = require('request');
 const configPath = './config.json';
 const utils = require('./utils');
 const config = require(configPath);
@@ -115,13 +116,14 @@ bot.on('message', message => {
               let sendRandomPic = () =>
               {
                 let id = utils.getImgurId(utils.random(5,7));
-                let url = "http://i.imgur.com/"+id+".jpeg";
                 (async () => {
                   const exists = await urlExist(url);
-                  console.log({"id":id,"exist":exists});
-                  if(exists)
+                  request("http://i.imgur.com/"+id+".jpeg", (err, resp) => 
                   {
-                    let embed = new Discord.MessageEmbed()
+                    console.log({"id":id,"exist":exists});
+                    if (resp.statusCode === 200) 
+                    {
+                      let embed = new Discord.MessageEmbed()
                     .setColor('#FFFF00')
                     .setTitle('Your image')
                     .setAuthor('Devoto')
@@ -130,11 +132,12 @@ bot.on('message', message => {
                     .setTimestamp()
                     .setFooter('OWO');
                     message.channel.send(embed);
-                  }
-                  else
-                  {
-                    sendRandomPic();
-                  }
+                    }
+                    else
+                    {
+                      sendRandomPic();
+                    }
+                  });
                 })();
               }
               sendRandomPic();
