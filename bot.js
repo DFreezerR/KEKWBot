@@ -118,6 +118,7 @@ bot.on('message', message => {
                 let url = "http://i.imgur.com/"+id+".jpg";
                 (async () => {
                   const exists = await urlExist(url);
+                  console.log({"id":id,"exist":exists});
                   if(exists)
                   {
                     let embed = new Discord.MessageEmbed()
