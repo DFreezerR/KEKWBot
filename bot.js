@@ -119,7 +119,7 @@ bot.on('message', message => {
                 (async () => {
                   const options = {
                     hostname: 'i.imgur.com',
-                    port: 80,
+                    port: 443,
                     path: "/"+id+".jpeg",
                     method: 'GET'
                   }
