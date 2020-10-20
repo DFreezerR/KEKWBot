@@ -115,7 +115,7 @@ bot.on('message', message => {
             {
               let sendRandomPic = () =>
               {
-                let id = utils.getImgurId(utils.random(5,7));
+                let id = utils.getImgurId(utils.random(5,8));
                 (async () => {
                   const options = {
                     hostname: 'i.imgur.com',
@@ -127,6 +127,7 @@ bot.on('message', message => {
                   {
                     if(res.statusCode == 200)
                     {
+                      console.log(id);
                       let embed = new Discord.MessageEmbed()
                       .setColor('#FF00FF')
                       .setTitle('Your image')
