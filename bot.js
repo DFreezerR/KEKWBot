@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const urlExist = require("url-exist");
-const request = require('request');
+const http = require('http');
 const configPath = './config.json';
 const utils = require('./utils');
 const config = require(configPath);
@@ -117,27 +117,33 @@ bot.on('message', message => {
               {
                 let id = utils.getImgurId(utils.random(5,7));
                 (async () => {
-                  const exists = await urlExist(url);
-                  request("http://i.imgur.com/"+id+".jpeg", (err, resp) => 
+                  const https = require('https')
+                  const options = {
+                    hostname: 'i.imgur.com',
+                    port: 80,
+                    path: "/"+id+".jpeg",
+                    method: 'GET'
+                  }
+                  const req = https.request(options, res => 
                   {
-                    console.log({"id":id,"exist":exists});
-                    if (resp.statusCode === 200) 
+                    if(res.statusCode == 200)
                     {
                       let embed = new Discord.MessageEmbed()
-                    .setColor('#FFFF00')
-                    .setTitle('Your image')
-                    .setAuthor('Devoto')
-                    .setDescription('Random image from Imgur')
-                    .setImage(url+'.jpg')
-                    .setTimestamp()
-                    .setFooter('OWO');
-                    message.channel.send(embed);
+                      .setColor('#FFFF00')
+                      .setTitle('Your image')
+                      .setAuthor('Devoto')
+                      .setDescription('Random image from Imgur')
+                      .setImage(url+'.jpg')
+                      .setTimestamp()
+                      .setFooter('OWO');
+                      message.channel.send(embed);
                     }
                     else
                     {
                       sendRandomPic();
                     }
-                  });
+                  })
+                  req.end()
                 })();
               }
               sendRandomPic();
