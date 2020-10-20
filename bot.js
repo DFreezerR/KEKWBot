@@ -127,7 +127,7 @@ bot.on('message', message => {
                   {
                     if(res.statusCode == 200)
                     {
-                      let url = 'https://www.i.imgur.com/'+id+'.jpeg';
+                      let url = 'https://i.imgur.com/'+id+'.jpeg';
                       console.log(url);
                       let embed = new Discord.MessageEmbed()
                       .setColor('#FF00FF')
