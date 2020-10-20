@@ -115,7 +115,7 @@ bot.on('message', message => {
               let sendRandomPic = () =>
               {
                 let id = utils.getImgurId(utils.random(5,7));
-                let url = "http://i.imgur.com/" + id;
+                let url = "http://i.imgur.com/"+id+".jpg";
                 (async () => {
                   const exists = await urlExist(url);
                   if(exists)
