@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const urlExist = require("url-exist");
-const http = require('http');
+const https = require('https');
 const configPath = './config.json';
 const utils = require('./utils');
 const config = require(configPath);
@@ -117,7 +117,6 @@ bot.on('message', message => {
               {
                 let id = utils.getImgurId(utils.random(5,7));
                 (async () => {
-                  const https = require('https')
                   const options = {
                     hostname: 'i.imgur.com',
                     port: 80,
