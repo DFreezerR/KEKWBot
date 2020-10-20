@@ -128,11 +128,11 @@ bot.on('message', message => {
                     if(res.statusCode == 200)
                     {
                       let embed = new Discord.MessageEmbed()
-                      .setColor('#FFFF00')
+                      .setColor('#FF00FF')
                       .setTitle('Your image')
-                      .setAuthor('Devoto')
+                      .setAuthor(message.member.user.tag)
                       .setDescription('Random image from Imgur')
-                      .setImage(url+'.jpg')
+                      .setImage('https://www.i.imgur.com/'+id+'.jpeg')
                       .setTimestamp()
                       .setFooter('OWO');
                       message.channel.send(embed);
