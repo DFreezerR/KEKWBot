@@ -115,8 +115,8 @@ bot.on('message', message => {
             {
               let sendRandomPic = () =>
               {
-                for(let i = 0; i < 20; i++) console.log(utils.getImgurId(utils.random(5,8)).length);
-                /*(async () => {
+                let id = utils.getImgurId(utils.random(5,8));
+                (async () => {
                   const options = {
                     hostname: 'i.imgur.com',
                     port: 443,
@@ -145,7 +145,7 @@ bot.on('message', message => {
                     }
                   })
                   req.end()
-                })();*/
+                })();
               }
               sendRandomPic();
             } break;
