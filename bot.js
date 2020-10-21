@@ -46,7 +46,6 @@ let getImgurImg = async (id) =>
       else
       {
         getImgurImg();
-        reject("rejected");
       }
     })
     req.end()
@@ -148,9 +147,9 @@ bot.on('message', message => {
             {
               (async()=>
               {
-                (await getImgurImg()).then((e)=>
+                (await getImgurImg()).then((resolve,reject)=>
                 {
-                  message.channel.send(e);
+                  message.channel.send(resolve);
                 });
               })()
             } break;
