@@ -115,8 +115,7 @@ bot.on('message', message => {
             {
               let sendRandomPic = () =>
               {
-                let id = utils.getImgurId(utils.random(5,8));
-                for(let i = 0; i < 20; i++) console.log(utils.random(5,8));
+                for(let i = 0; i < 20; i++) console.log(utils.getImgurId(utils.random(5,8)).length);
                 /*(async () => {
                   const options = {
                     hostname: 'i.imgur.com',
