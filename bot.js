@@ -18,7 +18,40 @@ bot.on('ready', () =>
 {
   console.log(`Logged in as ${bot.user.tag}!`);
 });
-
+let getImgurImg = async (id) =>
+{
+  return new Promise((resolve, reject) =>
+  {
+    const options = {
+      hostname: 'i.imgur.com',
+      port: 443,
+      path: "/"+id+".jpeg",
+      method: 'GET'
+    }
+    const req = https.request(options, res => 
+    {
+      if(res.statusCode == 200)
+      {
+        let url = 'https://i.imgur.com/'+id+'.jpeg';
+        let embed = new Discord.MessageEmbed()
+        .setColor('#FF00FF')
+        .setTitle('Your image')
+        .setAuthor(message.member.user.tag)
+        .setDescription('Random image from Imgur')
+        .setImage(url)
+        .setTimestamp()
+        .setFooter('OWO');
+        resolve(embed);
+      }
+      else
+      {
+        getImgurImg();
+        reject("rejected");
+      }
+    })
+    req.end()
+  }); 
+}
 bot.on('message', message => {
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
     if(message.author.bot != true)
@@ -113,41 +146,13 @@ bot.on('message', message => {
             } break;
             case 'pic':
             {
-              let sendRandomPic = () =>
+              (async()=>
               {
-                let id = utils.getImgurId(utils.random(5,8));
-                (async () => {
-                  const options = {
-                    hostname: 'i.imgur.com',
-                    port: 443,
-                    path: "/"+id+".jpeg",
-                    method: 'GET'
-                  }
-                  const req = https.request(options, res => 
-                  {
-                    if(res.statusCode == 200)
-                    {
-                      let url = 'https://i.imgur.com/'+id+'.jpeg';
-                      console.log(url);
-                      let embed = new Discord.MessageEmbed()
-                      .setColor('#FF00FF')
-                      .setTitle('Your image')
-                      .setAuthor(message.member.user.tag)
-                      .setDescription('Random image from Imgur')
-                      .setImage(url)
-                      .setTimestamp()
-                      .setFooter('OWO');
-                      message.channel.send(embed);
-                    }
-                    else
-                    {
-                      sendRandomPic();
-                    }
-                  })
-                  req.end()
-                })();
-              }
-              sendRandomPic();
+                (await getImgurImg()).then((e)=>
+                {
+                  message.channel.send(e);
+                });
+              })()
             } break;
             case 'help':
             {
