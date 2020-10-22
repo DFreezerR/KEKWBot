@@ -57,24 +57,6 @@ let CreateEmbed = (user, image) =>
         .setFooter('OWO');
   return embed;
 }
-let SendImgurPic = (user) =>
-{
-  return new Promise((resolve,reject)=>
-  {
-    let resolve1 = resolve;
-    getImgurImg(utils.getImgurId(utils.random(5,7))).then((resolve) =>
-    {
-      let embed = CreateEmbed(user,resolve);
-      console.log("Embed created");
-      resolve1(embed);
-
-    }).catch((error) =>
-    {
-      console.log(error.message);
-      SendImgurPic(user);
-    });
-  });
-}
 bot.on('message', message => 
 {
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
@@ -169,12 +151,20 @@ bot.on('message', message =>
             } break;
             case 'pic':
             {
-              SendImgurPic(message.member.user.tag).then((resolve) =>
+              (function a()
               {
-                console.log(1);
-                message.channel.send(resolve);
+                getImgurImg(utils.getImgurId(utils.random(5,7))).then((resolve) =>
+                {
+                  let embed = CreateEmbed(message.member.user.tag,resolve);
+                  console.log("Embed created");
+                  message.channel.send(embed);
 
-              }).catch(error=>console.log(error));
+                }).catch((error) =>
+                {
+                  console.log(error.message);
+                  a();
+                });
+              })();
             } break;
             case 'help':
             {
