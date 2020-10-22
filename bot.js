@@ -40,7 +40,7 @@ let getImgurImg = (id) =>
       }
       else
       {
-        return reject(new Error("No Image!"));
+        reject(new Error("No Image!"));
       }
     })
     req.end();
@@ -68,7 +68,7 @@ let SendImgurPic = async (user) =>
   }).catch((error) =>
   {
     console.log(error.message);
-    SendImgurPic(user);
+    //SendImgurPic(user);
   });
 }
 bot.on('message', message => 
