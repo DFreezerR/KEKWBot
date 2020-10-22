@@ -171,22 +171,17 @@ bot.on('message', message =>
             {
               (async ()=>
               {
-                await SendImgurPic(message.member.user.tag).then((resolve)=>
+                (await SendImgurPic(message.member.user.tag)).then((resolve)=>
                 {
-                  console.log(resolve);
                   message.channel.send(resolve);
 
-                }).catch(error=>
-                {
-                  console.log(error);
-                    
                 });
               })()
             } break;
             case 'help':
             {
               message.channel.send(utils.help);
-              
+
             } break;
             case 'mode':
               {
