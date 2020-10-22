@@ -45,11 +45,24 @@ let getImgurImg = async (id) =>
       }
       else
       {
-        getImgurImg();
+        reject(new Error("No Image"));
       }
     })
     req.end()
   }); 
+}
+let SendImgurPic = async () =>
+{
+  await getImgurImg().then((resolve)=>
+  {
+    console.log(resolve);
+    message.channel.send(resolve);
+
+  }).catch(error => 
+    {
+      console.log(error);
+      SendImgurPic();
+    });
 }
 bot.on('message', message => {
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
@@ -145,13 +158,7 @@ bot.on('message', message => {
             } break;
             case 'pic':
             {
-              (async()=>
-              {
-                (await getImgurImg()).then((resolve,reject)=>
-                {
-                  message.channel.send(resolve);
-                });
-              })()
+              SendImgurPic();
             } break;
             case 'help':
             {
