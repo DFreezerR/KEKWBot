@@ -66,11 +66,10 @@ let SendImgurPic = async (user) =>
 
   }).catch(error => 
     {
-      if(i > 0)
-      {
-        console.log(error);
-        SendImgurPic(user);
-      }
+      
+      console.log(error);
+      SendImgurPic(user);
+     
     });
 }
 bot.on('message', message => {
