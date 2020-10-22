@@ -170,6 +170,7 @@ bot.on('message', message =>
             {
               SendImgurPic(message.member.user.tag).then((resolve) =>
               {
+                console.log(1);
                 message.channel.send(resolve);
 
               }).catch(error=>console.log(error));
