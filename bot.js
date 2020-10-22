@@ -161,7 +161,7 @@ bot.on('message', message =>
 
                 }).catch((error) =>
                 {
-                  console.log(error.message);
+                  //console.log(error.message);
                   a();
                 });
               })();
