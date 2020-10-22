@@ -63,7 +63,7 @@ let SendImgurPic = async (user) =>
 {
   await getImgurImg(utils.getImgurId(utils.random(5,8))).then((resolve)=>
   {
-    message.channel.send(CreateEmbed(user,resolve));
+    return CreateEmbed(user,resolve);
 
   }).catch(error => 
     {
@@ -170,7 +170,7 @@ bot.on('message', message => {
             } break;
             case 'pic':
             {
-              SendImgurPic(message.member.user.tag);
+              message.channel.send(SendImgurPic(message.member.user.tag));
             } break;
             case 'help':
             {
