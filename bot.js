@@ -172,7 +172,7 @@ bot.on('message', message =>
               {
                 message.channel.send(resolve);
 
-              });
+              }).catch(error=>console.log(error));
             } break;
             case 'help':
             {
