@@ -166,7 +166,11 @@ bot.on('message', message => {
             } break;
             case 'pic':
             {
-              message.channel.send(SendImgurPic(message.member.user.tag));
+              (async =>
+                {
+                  let embed = await SendImgurPic(message.member.user.tag);
+                  message.channel.send(embed);
+                })()
             } break;
             case 'help':
             {
