@@ -61,7 +61,7 @@ let SendImgurPic = async () =>
   }).catch(error => 
     {
       console.log(error);
-      SendImgurPic();
+      //SendImgurPic();
     });
 }
 bot.on('message', message => {
