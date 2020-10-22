@@ -36,38 +36,41 @@ let getImgurImg = async (id) =>
       {
         let url = 'https://i.imgur.com/'+id+'.jpeg';
         console.log(url);
-        let embed = new Discord.MessageEmbed()
-        .setColor('#FF00FF')
-        .setTitle('Your image')
-        .setAuthor(message.member.user.tag)
-        .setDescription('Random image from Imgur')
-        .setImage(url)
-        .setTimestamp()
-        .setFooter('OWO');
-        resolve(embed);
+        resolve(url);
       }
       else
       {
-        reject("No Image");
+        reject(false);
       }
     })
     req.end()
   }); 
 }
+let CreateEmbed = (user, image) =>
+{
+  let embed = new Discord.MessageEmbed()
+        .setColor('#FF00FF')
+        .setTitle('Your image')
+        .setAuthor(user)
+        .setDescription('Random image from Imgur')
+        .setImage(image)
+        .setTimestamp()
+        .setFooter('OWO');
+  return embed;
+}
 let i = 1;
-let SendImgurPic = async () =>
+let SendImgurPic = async (user) =>
 {
   await getImgurImg(utils.getImgurId(utils.random(5,8))).then((resolve)=>
   {
-    console.log(resolve);
-    message.channel.send(resolve);
+    message.channel.send(CreateEmbed(user,resolve));
 
   }).catch(error => 
     {
       if(i > 0)
       {
         console.log(error);
-        SendImgurPic();
+        SendImgurPic(user);
         i++;
         if(i > 50) i = 0
       }
@@ -167,7 +170,7 @@ bot.on('message', message => {
             } break;
             case 'pic':
             {
-              SendImgurPic();
+              SendImgurPic(message.content.user.tag);
             } break;
             case 'help':
             {
