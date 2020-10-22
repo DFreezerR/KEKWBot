@@ -58,7 +58,6 @@ let CreateEmbed = (user, image) =>
         .setFooter('OWO');
   return embed;
 }
-let i = 1;
 let SendImgurPic = async (user) =>
 {
   await getImgurImg(utils.getImgurId(utils.random(5,8))).then((resolve)=>
@@ -71,8 +70,6 @@ let SendImgurPic = async (user) =>
       {
         console.log(error);
         SendImgurPic(user);
-        i++;
-        if(i > 50) i = 0
       }
     });
 }
