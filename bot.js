@@ -170,7 +170,7 @@ bot.on('message', message => {
             } break;
             case 'pic':
             {
-              SendImgurPic(message.content.user.tag);
+              SendImgurPic(message.member.user.tag);
             } break;
             case 'help':
             {
