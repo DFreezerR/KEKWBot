@@ -72,7 +72,7 @@ let SendImgurPic = (user) =>
       console.log(error.message);
       SendImgurPic(user);
     });
-  })
+  });
 }
 bot.on('message', message => 
 {
@@ -168,7 +168,8 @@ bot.on('message', message =>
             } break;
             case 'pic':
             {
-              SendImgurPic(message.member.user.tag).then((resolve) =>
+              let promise = SendImgurPic(message.member.user.tag);
+              promise.then((resolve) =>
               {
                 console.log(1);
                 message.channel.send(resolve);
