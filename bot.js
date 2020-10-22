@@ -68,7 +68,7 @@ let SendImgurPic = (user) =>
   }).catch((error) =>
   {
     console.log(error.message);
-    //SendImgurPic(user);
+    SendImgurPic(user);
   });
 }
 bot.on('message', message => 
