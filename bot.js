@@ -59,8 +59,9 @@ let CreateEmbed = (user, image) =>
 }
 let SendImgurPic = (user) =>
 {
-  return new Promise((resolve1,reject1)=>
+  return new Promise((resolve,reject)=>
   {
+    let {resolve1} = {resolve,reject};
     getImgurImg(utils.getImgurId(utils.random(5,7))).then((resolve) =>
     {
       let embed = CreateEmbed(user,resolve);
@@ -168,8 +169,7 @@ bot.on('message', message =>
             } break;
             case 'pic':
             {
-              let promise = SendImgurPic(message.member.user.tag);
-              promise.then((resolve) =>
+              SendImgurPic(message.member.user.tag).then((resolve) =>
               {
                 console.log(1);
                 message.channel.send(resolve);
