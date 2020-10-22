@@ -61,11 +61,10 @@ let SendImgurPic = (user) =>
 {
   return new Promise((resolve1,reject1)=>
   {
-    let promise = getImgurImg(utils.getImgurId(utils.random(5,7)));
-    promise.then((resolve) =>
+    getImgurImg(utils.getImgurId(utils.random(5,7))).then((resolve) =>
     {
       let embed = CreateEmbed(user,resolve);
-      console.log(embed);
+      console.log("Embed created");
       resolve1(embed);
 
     }).catch((error) =>
@@ -169,12 +168,11 @@ bot.on('message', message =>
             } break;
             case 'pic':
             {
-              
-                (SendImgurPic(message.member.user.tag)).then((resolve)=>
-                {
-                  message.channel.send(resolve);
+              SendImgurPic(message.member.user.tag).then((resolve) =>
+              {
+                message.channel.send(resolve);
 
-                });
+              });
             } break;
             case 'help':
             {
