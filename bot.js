@@ -56,7 +56,7 @@ let getImgurImg = async (id) =>
 }
 let SendImgurPic = async () =>
 {
-  await getImgurImg(utils.random(5,8)).then((resolve)=>
+  await getImgurImg(utils.getImgurId(utils.random(5,8))).then((resolve)=>
   {
     console.log(resolve);
     message.channel.send(resolve);
