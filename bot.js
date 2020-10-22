@@ -63,6 +63,7 @@ let SendImgurPic = (user) =>
   let promise = getImgurImg(utils.getImgurId(utils.random(5,8)));
   promise.then((resolve)=>
   {
+    console.log(resolve);
     return CreateEmbed(user,resolve);
 
   }).catch((error) =>
@@ -168,6 +169,7 @@ bot.on('message', message =>
               (async ()=>
               {
                 let embed = await SendImgurPic(message.member.user.tag);
+                console.log({embed});
                 message.channel.send(embed);
 
               })()
