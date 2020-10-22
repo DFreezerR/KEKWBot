@@ -30,7 +30,6 @@ let getImgurImg = (id) =>
     }
     const req = https.request(options, res => 
     {
-      console.log(res.statusCode);
       console.log(id);
       if(res.statusCode == 200)
       {
@@ -60,17 +59,19 @@ let CreateEmbed = (user, image) =>
 }
 let SendImgurPic = (user) =>
 {
-  let promise = getImgurImg(utils.getImgurId(utils.random(5,8)));
-  promise.then((resolve)=>
+  return new Promise((resolve1,reject1)=>
   {
-    console.log(resolve);
-    return CreateEmbed(user,resolve);
+    let promise = getImgurImg(utils.getImgurId(utils.random(5,8)));
+    promise.then((resolve) =>
+    {
+      resolve1(CreateEmbed(user,resolve));
 
-  }).catch((error) =>
-  {
-    console.log(error.message);
-    SendImgurPic(user);
-  });
+    }).catch((error) =>
+    {
+      console.log(error.message);
+      SendImgurPic(user);
+    });
+  })
 }
 bot.on('message', message => 
 {
@@ -168,7 +169,7 @@ bot.on('message', message =>
             {
               (async ()=>
               {
-                let embed = await SendImgurPic(message.member.user.tag);
+                let embed = SendImgurPic(message.member.user.tag);
                 console.log({embed});
                 message.channel.send(embed);
 
