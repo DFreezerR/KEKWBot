@@ -60,13 +60,11 @@ let CreateEmbed = (user, image) =>
 }
 let SendImgurPic = async (user) =>
 {
-  (await getImgurImg(utils.getImgurId(utils.random(5,8)))).then((resolve)=>
+  let promise = await getImgurImg(utils.getImgurId(utils.random(5,8)));
+  promise.then((resolve)=>
   {
     return CreateEmbed(user,resolve);
 
-  }, (reject) =>
-  {
-    console.log(reject);
   }).catch((error) =>
   {
     console.log(error);
