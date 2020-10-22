@@ -30,7 +30,7 @@ let getImgurImg = async (id) =>
     }
     const req = https.request(options, res => 
     {
-      console.log([res.statusCode]);
+      console.log(res.statusCode);
       console.log(id);
       if(res.statusCode == 200)
       {
@@ -60,17 +60,16 @@ let CreateEmbed = (user, image) =>
 }
 let SendImgurPic = async (user) =>
 {
-  await getImgurImg(utils.getImgurId(utils.random(5,8))).then((resolve)=>
+  (await getImgurImg(utils.getImgurId(utils.random(5,8)))).then((resolve)=>
   {
     return CreateEmbed(user,resolve);
 
-  }).catch(error => 
-    {
-      
-      console.log(error);
-      SendImgurPic(user);
-     
-    });
+  }).catch((error) => 
+  {
+    console.log(error);
+    SendImgurPic(user);
+    
+  });
 }
 bot.on('message', message => {
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
@@ -167,10 +166,10 @@ bot.on('message', message => {
             case 'pic':
             {
               (async ()=>
-                {
-                  let embed = await SendImgurPic(message.member.user.tag);
-                  message.channel.send(embed);
-                })()
+              {
+                let embed = await SendImgurPic(message.member.user.tag);
+                message.channel.send(embed);
+              })()
             } break;
             case 'help':
             {
