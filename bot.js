@@ -65,9 +65,9 @@ let SendImgurPic = async (user) =>
   {
     return CreateEmbed(user,resolve);
 
-  }).catch((error) =>
+  }).catch(() =>
   {
-    console.log(error);
+    console.log("No Image!");
     SendImgurPic(user);
 
   });
