@@ -65,11 +65,10 @@ let SendImgurPic = async (user) =>
   {
     return CreateEmbed(user,resolve);
 
-  }).catch((error) =>
+  }, (error) =>
   {
     console.log(error.message);
     SendImgurPic(user);
-
   });
 }
 bot.on('message', message => 
