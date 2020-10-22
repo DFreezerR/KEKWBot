@@ -166,7 +166,7 @@ bot.on('message', message => {
             } break;
             case 'pic':
             {
-              (async =>
+              (async ()=>
                 {
                   let embed = await SendImgurPic(message.member.user.tag);
                   message.channel.send(embed);
