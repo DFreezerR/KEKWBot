@@ -172,9 +172,13 @@ bot.on('message', message =>
               (async ()=>
               {
                 let embed = await SendImgurPic(message.member.user.tag);
-                console.log({embed});
-                message.channel.send(embed);
-
+                embed.then((resolve)=>
+                {
+                  message.channel.send(resolve);
+                }).catch(error=>
+                  {
+                    console.log(error);
+                  })
               })()
             } break;
             case 'help':
