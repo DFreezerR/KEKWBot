@@ -40,7 +40,7 @@ let getImgurImg = async (id) =>
       }
       else
       {
-        reject(throw new Error("No Image!"));
+        reject(new Error("No Image!"));
       }
     })
     req.end()
