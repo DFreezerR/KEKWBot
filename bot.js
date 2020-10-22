@@ -64,14 +64,18 @@ let SendImgurPic = async (user) =>
   {
     return CreateEmbed(user,resolve);
 
-  }).catch((error) => 
+  }, (reject) =>
+  {
+    console.log(reject);
+  }).catch((error) =>
   {
     console.log(error);
     SendImgurPic(user);
-    
+
   });
 }
-bot.on('message', message => {
+bot.on('message', message => 
+{
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
     if(message.author.bot != true)
     {
@@ -82,7 +86,6 @@ bot.on('message', message => {
           message.delete();
           return;
         }
-      
       });
       
       let input = message.content.split(" ").map(e=>e.trim());
@@ -169,6 +172,7 @@ bot.on('message', message => {
               {
                 let embed = await SendImgurPic(message.member.user.tag);
                 message.channel.send(embed);
+
               })()
             } break;
             case 'help':
