@@ -30,11 +30,11 @@ let getImgurImg = (id) =>
     }
     const req = https.request(options, res => 
     {
-      console.log(id);
+      //console.log(id);
       if(res.statusCode == 200)
       {
         let url = 'https://i.imgur.com/'+id+'.jpeg';
-        console.log(url);
+        //console.log(url);
         resolve(url);
       }
       else
@@ -156,7 +156,7 @@ bot.on('message', message =>
                 getImgurImg(utils.getImgurId(utils.random(5,7))).then((resolve) =>
                 {
                   let embed = CreateEmbed(message.member.user.tag,resolve);
-                  console.log("Embed created");
+                  //console.log("Embed created");
                   message.channel.send(embed);
 
                 }).catch((error) =>
