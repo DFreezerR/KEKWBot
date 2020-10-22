@@ -36,15 +36,15 @@ let getImgurImg = (id) =>
       {
         let url = 'https://i.imgur.com/'+id+'.jpeg';
         console.log(url);
-        req.end()
+        
         resolve(url);
       }
       else
       {
-        req.end()
         reject(new Error("No Image!"));
       }
     })
+    req.end();
   }); 
 }
 let CreateEmbed = (user, image) =>
