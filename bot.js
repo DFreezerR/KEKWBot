@@ -48,12 +48,13 @@ let getImgurImg = async (id) =>
       }
       else
       {
-        reject(new Error("No Image"));
+        reject("No Image");
       }
     })
     req.end()
   }); 
 }
+let i = 1;
 let SendImgurPic = async () =>
 {
   await getImgurImg(utils.getImgurId(utils.random(5,8))).then((resolve)=>
@@ -63,8 +64,13 @@ let SendImgurPic = async () =>
 
   }).catch(error => 
     {
-      console.log(error);
-      //SendImgurPic();
+      if(i > 0)
+      {
+        console.log(error);
+        SendImgurPic();
+        i++;
+        if(i > 50) i = 0
+      }
     });
 }
 bot.on('message', message => {
