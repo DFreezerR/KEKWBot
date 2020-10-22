@@ -36,12 +36,11 @@ let getImgurImg = (id) =>
       {
         let url = 'https://i.imgur.com/'+id+'.jpeg';
         console.log(url);
-        
         resolve(url);
       }
       else
       {
-        reject(new Error("No Image!"));
+        return reject(new Error("No Image!"));
       }
     })
     req.end();
