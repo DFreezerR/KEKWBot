@@ -40,7 +40,7 @@ let getImgurImg = async (id) =>
       }
       else
       {
-        reject(false);
+        throw new Error("No Image!");
       }
     })
     req.end()
@@ -65,9 +65,9 @@ let SendImgurPic = async (user) =>
   {
     return CreateEmbed(user,resolve);
 
-  }).catch(() =>
+  }).catch((error) =>
   {
-    console.log("No Image!");
+    console.log(error.message);
     SendImgurPic(user);
 
   });
