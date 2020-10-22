@@ -64,7 +64,9 @@ let SendImgurPic = (user) =>
     let promise = getImgurImg(utils.getImgurId(utils.random(5,8)));
     promise.then((resolve) =>
     {
-      resolve1(CreateEmbed(user,resolve));
+      let embed = CreateEmbed(user,resolve);
+      console.log(embed);
+      resolve1(embed);
 
     }).catch((error) =>
     {
