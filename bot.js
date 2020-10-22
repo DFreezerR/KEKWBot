@@ -30,9 +30,12 @@ let getImgurImg = async (id) =>
     }
     const req = https.request(options, res => 
     {
+      console.log([res]);
+      console.log.log(id);
       if(res.statusCode == 200)
       {
         let url = 'https://i.imgur.com/'+id+'.jpeg';
+        console.log(url);
         let embed = new Discord.MessageEmbed()
         .setColor('#FF00FF')
         .setTitle('Your image')
