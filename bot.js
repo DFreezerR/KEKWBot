@@ -18,7 +18,7 @@ bot.on('ready', () =>
 {
   console.log(`Logged in as ${bot.user.tag}!`);
 });
-let getImgurImg = async (id) =>
+let getImgurImg = (id) =>
 {
   return new Promise((resolve, reject) =>
   {
