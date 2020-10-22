@@ -30,8 +30,8 @@ let getImgurImg = async (id) =>
     }
     const req = https.request(options, res => 
     {
-      console.log([res]);
-      console.log.log(id);
+      console.log([res.statusCode]);
+      console.log(id);
       if(res.statusCode == 200)
       {
         let url = 'https://i.imgur.com/'+id+'.jpeg';
