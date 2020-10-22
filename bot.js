@@ -169,7 +169,7 @@ bot.on('message', message =>
             {
               (async ()=>
               {
-                let embed = SendImgurPic(message.member.user.tag);
+                let embed = await SendImgurPic(message.member.user.tag);
                 console.log({embed});
                 message.channel.send(embed);
 
