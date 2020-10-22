@@ -58,9 +58,9 @@ let CreateEmbed = (user, image) =>
         .setFooter('OWO');
   return embed;
 }
-let SendImgurPic = async (user) =>
+let SendImgurPic = (user) =>
 {
-  let promise = await getImgurImg(utils.getImgurId(utils.random(5,8)));
+  let promise = getImgurImg(utils.getImgurId(utils.random(5,8)));
   promise.then((resolve)=>
   {
     return CreateEmbed(user,resolve);
