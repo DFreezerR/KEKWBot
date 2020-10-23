@@ -52,6 +52,7 @@ let CreateEmbed = (user, image) =>
         .setTitle('Your image')
         .setAuthor(user)
         .setDescription(image)
+        .attachFiles(image)
         .setImage(image)
         .setTimestamp()
         .setFooter('OWO');
