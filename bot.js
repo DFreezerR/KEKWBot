@@ -51,7 +51,7 @@ let CreateEmbed = (user, image) =>
         .setColor('#FF00FF')
         .setTitle('Your image')
         .setAuthor(user)
-        .setDescription('Random image from Imgur')
+        .setDescription(image)
         .setImage(image)
         .setTimestamp()
         .setFooter('OWO');
@@ -200,13 +200,20 @@ bot.on('message', message =>
               } break;
               case 'ping':
                 {
-
                   let who = input[2];
-                  active = !active;
-                  while(active)
+                  let spam = setInterval(() =>
                   {
-                    message.channel.send(who);
+                    if(active)
+                    {
+                      message.channel.send(who);
+                    }
+                  }, 1000); 
+                  if(who == "stop")
+                  {
+                    active = false;
+                    clearInterval(spam);
                   }
+                  
                 } break;
           default:
             {
