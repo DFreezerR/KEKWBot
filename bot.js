@@ -33,7 +33,7 @@ let getImgurImg = (id) =>
       //console.log(id);
       if(res.statusCode == 200)
       {
-        let url = 'https://i.imgur.com/'+id+'.jpeg';
+        let url = 'https://i.imgur.com/'+id+'.jpg';
         //console.log(url);
         resolve(url);
       }
@@ -50,7 +50,7 @@ let CreateEmbed = (user, image) =>
   let embed = new Discord.MessageEmbed()
         .setColor('#FF00FF')
         .setTitle('Your image')
-        .setAuthor(user)
+        .setAuthor(user.tag, user.avatarURL)
         .setDescription(image)
         .attachFiles(image)
         .setImage(image)
@@ -156,7 +156,7 @@ bot.on('message', message =>
               {
                 getImgurImg(utils.getImgurId(utils.random(5,7))).then((resolve) =>
                 {
-                  let embed = CreateEmbed(message.member.user.tag,resolve);
+                  let embed = CreateEmbed(message.member.user,resolve);
                   //console.log("Embed created");
                   message.channel.send(embed);
 
@@ -202,8 +202,10 @@ bot.on('message', message =>
               case 'ping':
                 {
                   let who = input[2];
+                  console.log(who);
                   let spam = setInterval(() =>
                   {
+                    console.log(active);
                     if(active)
                     {
                       message.channel.send(who);
