@@ -204,19 +204,21 @@ bot.on('message', message =>
                   let who = input[2];
                   console.log(who);
                   active = true;
-                  if(who == "stop")
-                  {
-                    active = false;
-                  }
                   let spam = setInterval(() =>
                   {
-                    if(who == 'stop') clearInterval(spam);
+                    if(who == "stop")
+                    {
+                      active = false;
+                      clearInterval(spam);
+                    }
                     console.log(active);
                     if(active)
                     {
                       message.channel.send(who);
                     }
                   }, 1000); 
+                  
+                  
                   
                 } break;
           default:
