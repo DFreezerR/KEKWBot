@@ -204,10 +204,10 @@ bot.on('message', message =>
                   let who = input[2];
                   console.log(who);
                   active = true;
+                  if(who == 'stop') active = false;
                   let spam = setTimeout(function send()
                   {
                     console.log(active);
-                    if(who == 'stop') active = false;
                     if(active)
                     {
                       message.channel.send(who);
