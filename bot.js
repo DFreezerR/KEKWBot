@@ -202,22 +202,19 @@ bot.on('message', message =>
               case 'ping':
                 {
                   let who = input[2];
-                  let spam;
                   console.log(who);
                   active = true;
-                  if(who == "stop")
-                  {
-                      active = false;
-                      clearInterval(spam);
-                  }
-                  spam = setInterval(() =>
+                  let spam = setTimeout(function send()
                   {
                     console.log(active);
+                    if(who == 'stop') active = false;
                     if(active)
                     {
                       message.channel.send(who);
+                      smap = setTimeout(send,1000);
                     }
                   }, 1000); 
+                  
                 } break;
           default:
             {
