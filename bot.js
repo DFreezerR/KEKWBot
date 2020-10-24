@@ -202,6 +202,7 @@ bot.on('message', message =>
               case 'ping':
                 {
                   let who = input[2];
+                  if(who == '<@!207964835999121411>') return;
                   //console.log(who);
                   active = true;
                   if(who == 'stop') active = false;
