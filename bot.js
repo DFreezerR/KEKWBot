@@ -205,16 +205,18 @@ bot.on('message', message =>
                   console.log(who);
                   active = true;
                   if(who == 'stop') active = false;
-                  let spam = setTimeout(function send()
+                  if(active)
                   {
-                    console.log(active);
-                    if(active)
+                    let spam = setTimeout(function send()
                     {
-                      message.channel.send(who);
-                      smap = setTimeout(send,1000);
-                    }
-                  }, 1000); 
-                  
+                      console.log(active);
+                      if(active)
+                      {
+                        message.channel.send(who);
+                        smap = setTimeout(send,1000);
+                      }
+                    }, 1000); 
+                  }
                 } break;
           default:
             {
