@@ -213,9 +213,9 @@ bot.on('message', message =>
                       if(active)
                       {
                         message.channel.send(who);
-                        smap = setTimeout(send,1000);
+                        smap = setTimeout(send,2000);
                       }
-                    }, 1000); 
+                    }, 2000); 
                   }
                 } break;
           default:
