@@ -2,9 +2,9 @@ const Discord = require('discord.js');
 const urlExist = require("url-exist");
 const https = require('https');
 const configPath = './config.json';
+const { Database } = require('pg');
 const utils = require('./utils');
 const config = require(configPath);
-let fs = require('fs');
 const bot = new Discord.Client();
 const prefix = config.prefix;
 let working = true;
@@ -14,6 +14,14 @@ let react = config.react;
 let mode = "normal";
 let active = false;
 let banHorny = ['horny','хорни','нorny','hоrny','hornу','ноrny','ноrnу','hоrnу','h0rny','х0рни','xорни','хоpни','хорhи','xopни','h◌rny','hогnу'];
+const connection = new Database({
+
+  connectionString: process.env.DATABASE_URL,
+  ssl: 
+  {
+    rejectUnauthorized: false
+  }
+});
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
