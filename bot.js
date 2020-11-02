@@ -90,6 +90,25 @@ bot.on('message', message =>
             {
               message.channel.send("'FUCK YOU'ed "+count+" times.");
             } break;
+            case 'insert':
+              {
+                client.connect();
+                client.query('INSERT INTO blacklist_words (word) values ('+input[2]+')', (err, res) => {
+                  client.end();
+                }); 
+              } break;
+            case 'select':
+              {
+                client.connect();
+                client.query('SELECT * FROM blacklist_words', (err, res) => {
+                  if (err) console.log(err);
+                  for (let row of res.rows) 
+                  {
+                    message.channel.send(JSON.stringify(row));
+                  }
+                  client.end();
+                });
+              } break;
             case 'switch':
             {
               if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
