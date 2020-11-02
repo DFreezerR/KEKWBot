@@ -92,22 +92,28 @@ bot.on('message', message =>
             } break;
             case 'insert':
               {
-                client.connect();
-                client.query('INSERT INTO blacklist_words (word) values ('+input[2]+')', (err, res) => {
+                (async()=>
+                {
+                  await client.connect();
+                  await client.query('INSERT INTO blacklist_words (word) values ('+input[2]+')');
                   client.end();
-                }); 
+                })()
               } break;
             case 'select':
               {
-                client.connect();
-                client.query('SELECT * FROM blacklist_words', (err, res) => {
-                  if (err) console.log(err);
-                  for (let row of res.rows) 
+                (async()=>
+                {
+                  await client.connect();
+                  client.query('SELECT * FROM blacklist_words', (err, res) => 
                   {
-                    message.channel.send(JSON.stringify(row));
-                  }
-                  client.end();
-                });
+                    if (err) console.log(err);
+                    for (let row of res.rows) 
+                    {
+                      message.channel.send(JSON.stringify(row));
+                    }
+                    client.end();
+                  });
+                })()
               } break;
             case 'switch':
             {
