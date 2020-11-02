@@ -92,33 +92,34 @@ bot.on('message', message =>
             } break;
             case 'insert':
               {
-                (async()=>
-                {
-                  await client.connect();
-                  await client.query('INSERT INTO blacklist_words (word) values ('+input[2]+')').then(p=>
-                    {
-                      console.warn(input[2]+" inserted!");
-                      client.end()
-                    }).catch(e=>console.error(e));
-                })()
+                client.connect()
+                .then(() => console.log('connected'))
+                .catch(err => console.error('connection error', err.stack));
+                client.query('INSERT INTO blacklist_words (word) values ('+input[2]+')').then(p=>
+                  {
+                    console.warn(input[2]+" inserted!");
+                    client.end()
+                    .then(() => console.log('client has disconnected'))
+                    .catch(err => console.error('error during disconnection', err.stack));
+                  }).catch(e=>console.error(e));
+              
               } break;
             case 'select':
               {
-                console.log(123);
-                (async()=>
-                {
-                  await client.connect();
-                  await client.query('SELECT * FROM blacklist_words').then(p=>
+                client.connect()
+                .then(() => console.log('connected'))
+                .catch(err => console.error('connection error', err.stack));
+                client.query('SELECT * FROM blacklist_words').then(p=>
+                  {
+                    console.warn("Starting printing!");
+                    for (let row of res.rows) 
                     {
-                      console.warn("Starting printing!");
-                      for (let row of res.rows) 
-                      {
-                        message.channel.send(JSON.stringify(row));
-                      }
-                      client.end();
-                    }).catch(e=>console.error(e))
-                  
-                })()
+                      message.channel.send(JSON.stringify(row));
+                    }
+                    client.end()
+                    .then(() => console.log('client has disconnected'))
+                    .catch(err => console.error('error during disconnection', err.stack));
+                  }).catch(e=>console.error(e))
               } break;
             case 'switch':
             {
