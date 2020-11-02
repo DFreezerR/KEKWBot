@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const urlExist = require("url-exist");
 const https = require('https');
 const configPath = './config.json';
-const { Database } = require('pg');
+const Database = require('pg');
 const utils = require('./utils');
 const config = require(configPath);
 const bot = new Discord.Client();
@@ -55,7 +55,7 @@ let getImgurImg = (id) =>
 }
 let CreateEmbed = (user, image) =>
 {
-  let embed = new Discord.MessageEmbed()
+  return new Discord.MessageEmbed()
         .setColor('#FF00FF')
         .setTitle('Your image')
         .setAuthor(user.tag, user.avatarURL)
@@ -64,7 +64,7 @@ let CreateEmbed = (user, image) =>
         .setImage(image)
         .setTimestamp()
         .setFooter('OWO');
-  return embed;
+   
 }
 bot.on('message', message => 
 {
