@@ -104,7 +104,7 @@ bot.on('message', message =>
               } break;
             case 'select':
               {
-                console.log(process.env.DATABASE_URL);
+                console.log(123);
                 (async()=>
                 {
                   await client.connect();
