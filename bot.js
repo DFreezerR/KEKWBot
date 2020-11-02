@@ -14,7 +14,7 @@ let react = config.react;
 let mode = "normal";
 let active = false;
 let banHorny = ['horny','хорни','нorny','hоrny','hornу','ноrny','ноrnу','hоrnу','h0rny','х0рни','xорни','хоpни','хорhи','xopни','h◌rny','hогnу'];
-const connection = new Client({
+const client = new Client({
 
   connectionString: process.env.DATABASE_URL,
   ssl: 
