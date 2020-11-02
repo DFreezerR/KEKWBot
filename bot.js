@@ -95,7 +95,11 @@ bot.on('message', message =>
                 (async()=>
                 {
                   await client.connect();
-                  await client.query('INSERT INTO blacklist_words (word) values ('+input[2]+')').then(p=>client.end()).catch(e=>console.error(e));
+                  await client.query('INSERT INTO blacklist_words (word) values ('+input[2]+')').then(p=>
+                    {
+                      console.warn(input[2]+" inserted!");
+                      client.end()
+                    }).catch(e=>console.error(e));
                 })()
               } break;
             case 'select':
@@ -105,6 +109,7 @@ bot.on('message', message =>
                   await client.connect();
                   await client.query('SELECT * FROM blacklist_words').then(p=>
                     {
+                      console.warn("Starting printing!");
                       for (let row of res.rows) 
                       {
                         message.channel.send(JSON.stringify(row));
