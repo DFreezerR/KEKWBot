@@ -97,7 +97,7 @@ bot.on('message', message =>
                 pool.connect((e,client,done) =>
                 {
                   if (e) return console.error('connection error',e);
-                  client.query('INSERT INTO blacklist_words (word) values ($1)',input[2]).then(res=>
+                  client.query('INSERT INTO blacklist_words (word) values ($1)',[input[2]]).then(res=>
                     {
                       done();
                       console.warn(input[2]+" inserted!");
