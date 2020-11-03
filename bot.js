@@ -14,15 +14,16 @@ let react = config.react;
 let mode = "normal";
 let active = false;
 let banHorny = ['horny','хорни','нorny','hоrny','hornу','ноrny','ноrnу','hоrnу','h0rny','х0рни','xорни','хоpни','хорhи','xopни','h◌rny','hогnу'];
-const pool = new Pool();
-const client = new Client({
-
+const dbConfig = 
+{
   connectionString: process.env.DATABASE_URL,
   ssl: 
   {
     rejectUnauthorized: false
   }
-});
+}
+const pool = new Pool(dbConfig);
+const client = new Client(dbConfig);
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
