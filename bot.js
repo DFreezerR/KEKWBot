@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const urlExist = require("url-exist");
 const https = require('https');
 const configPath = './config.json';
-const { Client } = require('pg');
+const { Client, Pool } = require('pg');
 const utils = require('./utils');
 const config = require(configPath);
 const bot = new Discord.Client();
@@ -14,6 +14,7 @@ let react = config.react;
 let mode = "normal";
 let active = false;
 let banHorny = ['horny','хорни','нorny','hоrny','hornу','ноrny','ноrnу','hоrnу','h0rny','х0рни','xорни','хоpни','хорhи','xopни','h◌rny','hогnу'];
+const pool = new Pool();
 const client = new Client({
 
   connectionString: process.env.DATABASE_URL,
@@ -92,34 +93,38 @@ bot.on('message', message =>
             } break;
             case 'insert':
               {
-                client.connect()
-                .then(() => console.log('connected'))
-                .catch(err => console.error('connection error', err.stack));
-                client.query('INSERT INTO blacklist_words (word) values ('+input[2]+')').then(p=>
-                  {
-                    console.warn(input[2]+" inserted!");
-                    client.end()
-                    .then(() => console.log('client has disconnected'))
-                    .catch(err => console.error('error during disconnection', err.stack));
-                  }).catch(e=>console.error(e));
+                pool.connect((e,client,done) =>
+                {
+                  if (e) return console.error('connection error',e);
+                  client.query('INSERT INTO blacklist_words (word) values ('+input[2]+')').then(res=>
+                    {
+                      done();
+                      console.warn(input[2]+" inserted!");
+                    }).catch(e=>
+                      {
+                        return console.error(e);
+                      });
+                });
               
               } break;
             case 'select':
               {
-                client.connect()
-                .then(() => console.log('connected'))
-                .catch(err => console.error('connection error', err.stack));
-                client.query('SELECT * FROM blacklist_words').then(p=>
-                  {
-                    console.warn("Starting printing!");
-                    for (let row of res.rows) 
+                pool.connect((e,client,done) =>
+                {
+                  if (e) return console.error('connection error',e);
+                  client.query('SELECT * FROM blacklist_words').then(res =>
                     {
-                      message.channel.send(JSON.stringify(row));
-                    }
-                    client.end()
-                    .then(() => console.log('client has disconnected'))
-                    .catch(err => console.error('error during disconnection', err.stack));
-                  }).catch(e=>console.error(e))
+                      console.warn("Starting printing!");
+                      for (let row of res.rows) 
+                      {
+                        message.channel.send(JSON.stringify(row));
+                      }
+                    }).catch(e=>
+                      {
+                        return console.error(e);
+                      });
+                });
+                
               } break;
             case 'switch':
             {
