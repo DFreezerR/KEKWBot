@@ -112,20 +112,26 @@ bot.on('message', message =>
             } break;
             case 'insert':
               {
-                pool.connect((e,client,done) =>
+                if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
                 {
-                  if (e) return console.error('connection error',e);
-                  client.query('INSERT INTO blacklist_words (word) values ($1)',[input[2]]).then(res=>
-                    {
-                      done();
-                      console.warn(input[2]+" inserted!");
-                      message.react("708697210711310460");
-                    }).catch(e=>
+                  pool.connect((e,client,done) =>
+                  {
+                    if (e) return console.error('connection error',e);
+                    client.query('INSERT INTO blacklist_words (word) values ($1)',[input[2]]).then(res=>
                       {
-                        return console.error(e);
-                      });
-                });
-              
+                        done();
+                        console.warn(input[2]+" inserted!");
+                        message.react("708697210711310460");
+                      }).catch(e=>
+                        {
+                          return console.error(e);
+                        });
+                  });
+                }
+                else
+                {
+                  message.reply('You do not have permissions to do this!');
+                }
               } break;
             case 'select':
               {
