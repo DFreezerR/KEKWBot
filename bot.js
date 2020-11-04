@@ -4,6 +4,7 @@ const https = require('https');
 const configPath = './config.json';
 const { Client, Pool } = require('pg');
 const utils = require('./utils');
+const { cli } = require('winston/lib/winston/config');
 const config = require(configPath);
 const bot = new Discord.Client();
 const prefix = config.prefix;
@@ -20,7 +21,9 @@ const dbConfig =
   ssl: 
   {
     rejectUnauthorized: false
-  }
+  },
+  max: 20,
+  idleTimeoutMillis: 1000
 }
 const pool = new Pool(dbConfig);
 //const client = new Client(dbConfig);
@@ -145,6 +148,7 @@ bot.on('message', message =>
                   {
                     return client.query('SELECT * FROM blacklist_words').then(res =>
                       {
+                        client.release();
                         let result = '';
                         for (let row of res.rows) 
                         {
@@ -153,6 +157,7 @@ bot.on('message', message =>
                         message.channel.send(result);
                       }).catch(e=>
                         {
+                          client.release();
                           console.error(e);
                         });
                   }).catch(e=> console.error("Pool connection error!",e));
