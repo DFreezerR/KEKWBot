@@ -13,7 +13,7 @@ let chance = config.chance;
 let react = config.react;
 let mode = "normal";
 let active = false;
-let banHorny = ['horny','хорни','нorny','hоrny','hornу','ноrny','ноrnу','hоrnу','h0rny','х0рни','xорни','хоpни','хорhи','xopни','h◌rny','hогnу'];
+let banHorny = [];
 const dbConfig = 
 {
   connectionString: process.env.DATABASE_URL,
@@ -35,14 +35,15 @@ bot.on('ready', () =>
         console.warn("Starting printing!");
         for (let row of res.rows) 
         {
-          console.log(JSON.stringify(row));
-          console.log(row['word']);
+          banHorny.push(row['word']);
+          
         }
       }).catch(e=>
         {
           return console.error(e);
         });
   });
+  console.log(banHorny);
 });
 let getImgurImg = (id) =>
 {
@@ -89,15 +90,17 @@ bot.on('message', message =>
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
     if(message.author.bot != true)
     {
-      banHorny.forEach((e)=>
+      if(banHorny.length > 0 && banhorny)
       {
-        if(message.content.toLowerCase().includes(e))
+        banHorny.forEach((e)=>
         {
-          message.delete();
-          return;
-        }
-      });
-      
+          if(message.content.toLowerCase().includes(e))
+          {
+            message.delete();
+            return;
+          }
+        });
+      }
       let input = message.content.split(" ").map(e=>e.trim());
       if (input[0] == prefix) 
       {
@@ -117,6 +120,7 @@ bot.on('message', message =>
                     {
                       done();
                       console.warn(input[2]+" inserted!");
+                      message.react("708697210711310460");
                     }).catch(e=>
                       {
                         return console.error(e);
