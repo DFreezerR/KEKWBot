@@ -32,7 +32,6 @@ bot.on('ready', () =>
     if (e) return console.error('connection error',e);
     client.query('SELECT * FROM blacklist_words').then(res =>
       {
-        console.warn("Starting printing!");
         for (let row of res.rows) 
         {
           banHorny.push(row['word']);
@@ -157,7 +156,7 @@ bot.on('message', message =>
               }
               else
               {
-
+                message.reply('You do not have permissions to do this!');
               }
             } break;
             case 'random':
