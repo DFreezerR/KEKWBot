@@ -23,25 +23,29 @@ const dbConfig =
   }
 }
 const pool = new Pool(dbConfig);
-const client = new Client(dbConfig);
+//const client = new Client(dbConfig);
+pool.on('error', (err, client) => 
+{
+  console.error('Unexpected error on idle client', err);
+})
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
-  pool.connect((e,client,done) =>
-  {
-    if (e) return console.error('connection error',e);
-    client.query('SELECT * FROM blacklist_words').then(res =>
-      {
-        for (let row of res.rows) 
+  pool.connect().then(client =>
+    {
+      return client.query('SELECT * FROM blacklist_words').then(res =>
         {
-          banHorny.push(row['word']);
-          
-        }
-      }).catch(e=>
-        {
-          return console.error(e);
-        });
-  });
+          client.release();
+          for (let row of res.rows) 
+          {
+            banHorny.push(row['word']);
+          }
+        }).catch(e=>
+          {
+            client.release();
+            console.error(e);
+          });
+    }).catch(e=> console.error("Pool connection error!",e));
   //console.log(banHorny);
 });
 let getImgurImg = (id) =>
@@ -114,21 +118,21 @@ bot.on('message', message =>
               {
                 if(message.member.roles.cache.some(e=>e.name === "OWO" || e.name === "DJ"))
                 {
-                  pool.connect((e,client,done) =>
-                  {
-                    if (e) return console.error('connection error',e);
-                    let insertWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""))
-                    client.query('INSERT INTO blacklist_words (word) values ($1)',[insertWord]).then(res=>
-                      {
-                        done();
-                        banHorny.push(insertWord);
-                        console.warn(insertWord+" inserted!");
-                        message.react("708697210711310460");
-                      }).catch(e=>
+                  pool.connect().then(client =>
+                    {
+                      let insertWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""));
+                      return client.query('INSERT INTO blacklist_words (word) values ($1)',[insertWord]).then(res=>
                         {
-                          return console.error(e);
-                        });
-                  });
+                          client.release();
+                          banHorny.push(insertWord);
+                          console.warn(insertWord+" inserted!");
+                          message.react("708697210711310460");
+                        }).catch(ee=>
+                          {
+                            client.release();
+                            console.error(ee);
+                          });
+                    }).catch(e=> console.error("Pool connection error!",e));
                 }
                 else
                 {
@@ -137,26 +141,25 @@ bot.on('message', message =>
               } break;
             case 'select':
               {
-                pool.connect((e,client,done) =>
-                {
-                  if (e) return console.error('connection error',e);
-                  client.query('SELECT * FROM blacklist_words').then(res =>
-                    {
-                      //console.warn("Starting printing!");
-                      for (let row of res.rows) 
+                pool.connect().then(client =>
+                  {
+                    return client.query('SELECT * FROM blacklist_words').then(res =>
                       {
-                        message.channel.send(JSON.stringify(row));
-                      }
-                    }).catch(e=>
-                      {
-                        return console.error(e);
-                      });
-                });
-                
+                        let result = '';
+                        for (let row of res.rows) 
+                        {
+                          result += row['word']+'\n';
+                        }
+                        message.channel.send(result);
+                      }).catch(e=>
+                        {
+                          console.error(e);
+                        });
+                  }).catch(e=> console.error("Pool connection error!",e));
               } break;
             case 'switch':
             {
-              if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
+              if(message.member.roles.cache.some(e=>e.name === "OWO" || e.name === "DJ"))
               {
                 working = !working;
                 let state = working == true ? "on" : "off";
