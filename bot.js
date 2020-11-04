@@ -36,7 +36,7 @@ bot.on('ready', () =>
         for (let row of res.rows) 
         {
           console.log(JSON.stringify(row));
-          console.log(row);
+          console.log(row['word']);
         }
       }).catch(e=>
         {
