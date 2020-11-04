@@ -27,6 +27,22 @@ const client = new Client(dbConfig);
 bot.on('ready', () => 
 {
   console.log(`Logged in as ${bot.user.tag}!`);
+  pool.connect((e,client,done) =>
+  {
+    if (e) return console.error('connection error',e);
+    client.query('SELECT * FROM blacklist_words').then(res =>
+      {
+        console.warn("Starting printing!");
+        for (let row of res.rows) 
+        {
+          console.log(JSON.stringify(row));
+          console.log(row);
+        }
+      }).catch(e=>
+        {
+          return console.error(e);
+        });
+  });
 });
 let getImgurImg = (id) =>
 {
