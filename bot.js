@@ -120,6 +120,7 @@ bot.on('message', message =>
                     client.query('INSERT INTO blacklist_words (word) values ($1)',[input[2]]).then(res=>
                       {
                         done();
+                        banHorny.push(input[2]);
                         console.warn(input[2]+" inserted!");
                         message.react("708697210711310460");
                       }).catch(e=>
@@ -140,7 +141,7 @@ bot.on('message', message =>
                   if (e) return console.error('connection error',e);
                   client.query('SELECT * FROM blacklist_words').then(res =>
                     {
-                      console.warn("Starting printing!");
+                      //console.warn("Starting printing!");
                       for (let row of res.rows) 
                       {
                         message.channel.send(JSON.stringify(row));
