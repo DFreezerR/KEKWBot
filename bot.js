@@ -117,11 +117,12 @@ bot.on('message', message =>
                   pool.connect((e,client,done) =>
                   {
                     if (e) return console.error('connection error',e);
-                    client.query('INSERT INTO blacklist_words (word) values ($1)',[input[2]]).then(res=>
+                    let insertWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""))
+                    client.query('INSERT INTO blacklist_words (word) values ($1)',[insertWord]).then(res=>
                       {
                         done();
-                        banHorny.push(input[2]);
-                        console.warn(input[2]+" inserted!");
+                        banHorny.push(insertWord);
+                        console.warn(insertWord+" inserted!");
                         message.react("708697210711310460");
                       }).catch(e=>
                         {
