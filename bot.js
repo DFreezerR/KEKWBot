@@ -89,7 +89,7 @@ bot.on('message', message =>
     let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
     if(message.author.bot != true)
     {
-      if(banHorny.length > 0 && banhorny)
+      if(banHorny.length > 0 && banHorny)
       {
         banHorny.forEach((e)=>
         {
