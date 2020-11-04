@@ -112,7 +112,7 @@ bot.on('message', message =>
             } break;
             case 'insert':
               {
-                if(message.member.roles.some(e=>e.name === "OWO" || e.name === "DJ"))
+                if(message.member.roles.find(e=>e.name === "OWO" || e.name === "DJ"))
                 {
                   pool.connect((e,client,done) =>
                   {
