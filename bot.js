@@ -53,8 +53,8 @@ bot.on('ready', () =>
   {
     return client.query('SELECT value FROM config_variables WHERE key = \'count\'').then(res=>
       {
-        console.log(res);
-        count = res.rows[0]
+        console.log(res.rows[0]['value']);
+        count = res.rows[0]['value'];
 
       }).catch(ee=>
         {
