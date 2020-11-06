@@ -354,6 +354,7 @@ let saveCountDB = setInterval(() =>
   {
     return client.query('UPDATE config_variables SET value = $1 WHERE key = \'count\'',[count]).then(res=>
       {
+        console.log(count + ' inserted')
         client.release();
       }).catch(ee=>
         {
@@ -362,5 +363,4 @@ let saveCountDB = setInterval(() =>
         });
   }).catch(e=> console.error("Pool connection error!",e));
 },300000);
-saveCountDB();
 bot.login(process.env.token);
