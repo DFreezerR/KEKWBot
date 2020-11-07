@@ -362,5 +362,5 @@ let saveCountDB = setInterval(() =>
           console.error(ee);
         });
   }).catch(e=> console.error("Pool connection error!",e));
-},300000);
+},600000);
 bot.login(process.env.token);
