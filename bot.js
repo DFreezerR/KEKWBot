@@ -107,19 +107,6 @@ let CreateEmbed = (user, image) =>
 bot.on('message', message => 
 {
   let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
-  if(message.author.bot != true)
-  {
-    if(banHorny.length > 0 && banHorny)
-    {
-      banHorny.forEach((e)=>
-      {
-        if(message.content.toLowerCase().includes(e))
-        {
-          message.delete();
-          return;
-        }
-      });
-    }
     let input = message.content.split(" ").map(e=>e.trim());
     if (input[0] == prefix) 
     {
@@ -355,32 +342,45 @@ bot.on('message', message =>
     }
     else
     {
-      if(working && message.member.user.tag == "vaytvi#4838" && mode == "special")
+      if(message.author.bot != true)
       {
-        if(utils.random(0,100)<=chance)
+        if(banHorny.length > 0 && banHorny)
         {
-          message.reply("FUCK YOU");
+          banHorny.forEach((e)=>
+          {
+            if(message.content.toLowerCase().includes(e))
+            {
+              message.delete();
+              return;
+            }
+          });
         }
-        count++;
+        if(working && message.member.user.tag == "vaytvi#4838" && mode == "special")
+        {
+          if(utils.random(0,100)<=chance)
+          {
+            message.reply("FUCK YOU");
+          }
+          count++;
         
-      }
-      if(working && mode == "normal")
-      {
-        if(utils.random(0,100)<=chance)
-        {
-          message.reply("FUCK YOU");
         }
-        count++;
+        if(working && mode == "normal")
+        {
+          if(utils.random(0,100)<=chance)
+          {
+            message.reply("FUCK YOU");
+          }
+          count++;
+        }
       }
-    }
-    if(utils.random(0,100)<=react)
-    {
-      message.react(utils.getRandomReactEmote());
-    }
-    if(utils.random(0,100)<=react)
-    {
-      message.reply(utils.getRandomEmote());
-    }
+      if(utils.random(0,100)<=react)
+      {
+        message.react(utils.getRandomReactEmote());
+      }
+      if(utils.random(0,100)<=react)
+      {
+        message.reply(utils.getRandomEmote());
+      }
   }
 });
 let saveCountDB = setInterval(() =>
