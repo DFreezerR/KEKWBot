@@ -141,8 +141,38 @@ bot.on('message', message =>
                       message.reply("Use \" \" to insert your string");
                       return;
                     }
+                    let removeWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""));
+                    return client.query('INSERT INTO blacklist_words (word) values ($1)',[removeWord]).then(res=>
+                      {
+                        client.release();
+                        banHorny.splice(banHorny.indexOf(removeWord),1);
+                        console.warn(removeWord+" removed!");
+                        message.react("708697210711310460");
+                      }).catch(ee=>
+                        {
+                          client.release();
+                          console.error(ee);
+                        });
+                  }).catch(e=> console.error("Pool connection error!",e));
+              }
+              else
+              {
+                message.reply('You do not have permissions to do this!');
+              }
+            } break;
+            case 'remove':
+            {
+              if(message.member.roles.cache.some(e=>e.name === "OWO"))
+              {
+                pool.connect().then(client =>
+                  {
+                    if((message.content.split("\"")).length - 1 < 3)
+                    {
+                      message.reply("Use \" \" to remove your string");
+                      return;
+                    }
                     let insertWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""));
-                    return client.query('INSERT INTO blacklist_words (word) values ($1)',[insertWord]).then(res=>
+                    return client.query('DELETE from blacklist_words WHERE word = ($1)',[insertWord]).then(res=>
                       {
                         client.release();
                         banHorny.push(insertWord);
