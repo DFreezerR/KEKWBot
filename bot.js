@@ -146,7 +146,7 @@ bot.on('message', message =>
                       {
                         client.release();
                         banHorny.splice(banHorny.indexOf(removeWord),1);
-                        console.warn(removeWord+" removed!");
+                        console.warn(removeWord+" inserted!");
                         message.react("708697210711310460");
                       }).catch(ee=>
                         {
@@ -176,7 +176,7 @@ bot.on('message', message =>
                       {
                         client.release();
                         banHorny.push(insertWord);
-                        console.warn(insertWord+" inserted!");
+                        console.warn(insertWord+" removed!");
                         message.react("708697210711310460");
                       }).catch(ee=>
                         {
