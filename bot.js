@@ -132,12 +132,13 @@ bot.on('message', message =>
           } break;
           case 'insert':
             {
-              if(message.member.roles.cache.some(e=>e.name === "OWO" || e.name === "DJ"))
+              if(message.member.roles.cache.some(e=>e.name === "OWO"))
               {
                 pool.connect().then(client =>
                   {
                     let insertWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""));
-                    return client.query('INSERT INTO blacklist_words (word) values ($1)',[insertWord]).then(res=>
+                    console.log(insertWord);
+                    /*return client.query('INSERT INTO blacklist_words (word) values ($1)',[insertWord]).then(res=>
                       {
                         client.release();
                         banHorny.push(insertWord);
@@ -147,7 +148,7 @@ bot.on('message', message =>
                         {
                           client.release();
                           console.error(ee);
-                        });
+                        });*/
                   }).catch(e=> console.error("Pool connection error!",e));
               }
               else
