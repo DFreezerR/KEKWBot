@@ -136,9 +136,13 @@ bot.on('message', message =>
               {
                 pool.connect().then(client =>
                   {
+                    if((message.content.split("\"")).length - 1 < 3)
+                    {
+                      message.reply("Use \" \" to insert your string");
+                      return;
+                    }
                     let insertWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""));
-                    console.log(insertWord);
-                    /*return client.query('INSERT INTO blacklist_words (word) values ($1)',[insertWord]).then(res=>
+                    return client.query('INSERT INTO blacklist_words (word) values ($1)',[insertWord]).then(res=>
                       {
                         client.release();
                         banHorny.push(insertWord);
@@ -148,7 +152,7 @@ bot.on('message', message =>
                         {
                           client.release();
                           console.error(ee);
-                        });*/
+                        });
                   }).catch(e=> console.error("Pool connection error!",e));
               }
               else
