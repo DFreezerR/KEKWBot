@@ -166,7 +166,7 @@ bot.on('message', message =>
               {
                 pool.connect().then(client =>
                   {
-                    if((message.content.split("\"")).length - 1 < 3)
+                    if((message.content.split("\"")).length - 1 < 2)
                     {
                       message.reply("Use \" \" to remove your string");
                       return;
