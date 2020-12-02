@@ -402,7 +402,7 @@ bot.on('message', message =>
             {
               if(a.name.endsWith('.png') || a.name.endsWith('.jpg') || a.name.endsWith('.bmp'))
               {
-                console.log({a});
+                lastImage = a.url;
               };
             }
           });
