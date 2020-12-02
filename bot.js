@@ -5,8 +5,7 @@ const configPath = './config.json';
 const {  Pool } = require('pg');
 const utils = require('./utils');
 var Vibrant = require('node-vibrant');
-const express = require('express');
-const app = express();
+const fetch = require('node-fetch');
 app.use(express.json());
 const config = require(configPath);
 const bot = new Discord.Client();
@@ -124,15 +123,15 @@ bot.on('message', message =>
         {
           try 
           {
-            console.log(lastImage);
-            app.get(lastImage, function(req,res)
+            (async()=>
             {
-              console.log(req.body);
-              Vibrant.from(req.body).getPalette().then((palette) =>
+              const response = await fetch(lastImage);
+              const buffer = await response.buffer();
+              Vibrant.from(buffer).getPalette().then((palette) =>
               {
                 message.channel.send(palette);
               });
-            });
+            })()
           } catch (error) 
           {
               console.debug(error.body);
