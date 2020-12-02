@@ -5,6 +5,8 @@ const configPath = './config.json';
 const {  Pool } = require('pg');
 const utils = require('./utils');
 var Vibrant = require('node-vibrant');
+const express = require('express');
+const app = express();
 const config = require(configPath);
 const bot = new Discord.Client();
 const prefix = config.prefix;
@@ -122,11 +124,14 @@ bot.on('message', message =>
         {
           try 
           {
-            console.log(lastImage);
-              Vibrant.from(lastImage).getPalette().then((palette) =>
+            app.get(lastImage, function(req,res)
+            {
+              console.log(req.body);
+              Vibrant.from(req.body).getPalette().then((palette) =>
               {
                 message.channel.send(palette);
               });
+            });
           } catch (error) 
           {
               console.debug(error.body);
