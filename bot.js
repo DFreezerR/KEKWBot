@@ -4,7 +4,7 @@ const https = require('https');
 const configPath = './config.json';
 const {  Pool } = require('pg');
 const utils = require('./utils');
-const { cli } = require('winston/lib/winston/config');
+var Vibrant = require('node-vibrant');
 const config = require(configPath);
 const bot = new Discord.Client();
 const prefix = config.prefix;
@@ -15,6 +15,7 @@ let react = config.react;
 let mode = "normal";
 let active = false;
 let banHorny = [];
+let lastImage;
 const dbConfig = 
 {
   connectionString: process.env.DATABASE_URL,
@@ -107,271 +108,283 @@ let CreateEmbed = (user, image) =>
 bot.on('message', message => 
 {
   let allowedRole = message.member.roles.cache.some(role=>role.name==="OWO");
-    let input = message.content.split(" ").map(e=>e.trim());
-    if (input[0] == prefix) 
+  let input = message.content.split(" ").map(e=>e.trim());
+  if (input[0] == prefix) 
+  {
+    let command = input[1];
+    switch(command)
     {
-      let command = input[1];
-      switch(command)
-      {
-          case 'count':
+        case 'count':
+        {
+          message.channel.send("'FUCK YOU'ed "+count+" times.");
+        } break;
+        case 'color':
+        {
+          try 
           {
-            message.channel.send("'FUCK YOU'ed "+count+" times.");
-          } break;
-          case 'insert':
-            {
-              if(message.member.roles.cache.some(e=>e.name === "OWO"))
+              Vibrant.from(lastImage).getPalette().then((palette) =>
               {
-                pool.connect().then(client =>
-                  {
-                    if((message.content.split("\"")).length - 1 < 2)
-                    {
-                      message.reply("Use \" \" to insert your string");
-                      return;
-                    }
-                    let removeWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""));
-                    return client.query('INSERT INTO blacklist_words (word) values ($1)',[removeWord]).then(res=>
-                      {
-                        client.release();
-                        banHorny.splice(banHorny.indexOf(removeWord),1);
-                        console.warn(removeWord+" inserted!");
-                        message.react("708697210711310460");
-                      }).catch(ee=>
-                        {
-                          client.release();
-                          console.error(ee);
-                        });
-                  }).catch(e=> console.error("Pool connection error!",e));
-              }
-              else
-              {
-                message.reply('You do not have permissions to do this!');
-              }
-            } break;
-            case 'remove':
-            {
-              if(message.member.roles.cache.some(e=>e.name === "OWO"))
-              {
-                pool.connect().then(client =>
-                  {
-                    if((message.content.split("\"")).length - 1 < 2)
-                    {
-                      message.reply("Use \" \" to remove your string");
-                      return;
-                    }
-                    let insertWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""));
-                    return client.query('DELETE from blacklist_words WHERE word = ($1)',[insertWord]).then(res=>
-                      {
-                        client.release();
-                        banHorny.push(insertWord);
-                        console.warn(insertWord+" removed!");
-                        message.react("708697210711310460");
-                      }).catch(ee=>
-                        {
-                          client.release();
-                          console.error(ee);
-                        });
-                  }).catch(e=> console.error("Pool connection error!",e));
-              }
-              else
-              {
-                message.reply('You do not have permissions to do this!');
-              }
-            } break;
-          case 'select':
+                message.channel.send(palette);
+              });
+          } catch (error) 
+          {
+              console.debug(error.body);
+          }
+        } break;
+        case 'insert':
+          {
+            if(message.member.roles.cache.some(e=>e.name === "OWO"))
             {
               pool.connect().then(client =>
                 {
-                  return client.query('SELECT * FROM blacklist_words').then(res =>
+                  if((message.content.split("\"")).length - 1 < 2)
+                  {
+                    message.reply("Use \" \" to insert your string");
+                    return;
+                  }
+                  let removeWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""));
+                  return client.query('INSERT INTO blacklist_words (word) values ($1)',[removeWord]).then(res=>
                     {
                       client.release();
-                      let result = '';
-                      for (let row of res.rows) 
-                      {
-                        result += row['word']+'\n';
-                      }
-                      message.channel.send(result);
-                    }).catch(e=>
+                      banHorny.splice(banHorny.indexOf(removeWord),1);
+                      console.warn(removeWord+" inserted!");
+                      message.react("708697210711310460");
+                    }).catch(ee=>
                       {
                         client.release();
-                        console.error(e);
+                        console.error(ee);
                       });
                 }).catch(e=> console.error("Pool connection error!",e));
-            } break;
-          case 'switch':
-          {
-            if(message.member.roles.cache.some(e=>e.name === "OWO" || e.name === "DJ"))
-            {
-              working = !working;
-              let state = working == true ? "on" : "off";
-              message.channel.send("'FUCK YOU' option turned "+ state);
             }
             else
             {
               message.reply('You do not have permissions to do this!');
             }
           } break;
-          case 'random':
+          case 'remove':
           {
-            let min = input[2];
-            let max = input[3];
-            message.channel.send(utils.random(min, max));
-          } break;
-          case 'eval':
-          {
-            input.splice(0,2)
-            let a = message.content.substr(prefix.toString().length+command.length+2, message.content.length-1);
-            let output = eval(a);
-            if(output === undefined) return;
-            message.channel.send(output);
-          } break;
-          case 'chance':
-          {
-            if(allowedRole)
+            if(message.member.roles.cache.some(e=>e.name === "OWO"))
             {
-              let value = input[2];
-              if(value[value.length-1] == "%")
-              {
-                value = value.slice(0,-1);
-              }
-              chance = value;
-              message.reply('You changed the probability of being "FUCK YOU"ed to '+value+'%!');
-            }
-            else
-            {
-              message.reply('You do not have permissions to do this!');
-            }
-
-          } break;
-          case 'react':
-          {
-            if(allowedRole)
-            {
-              let value = input[2];
-              if(value[value.length-1] == "%")
-              {
-                value = value.slice(0,-1);
-              }
-              react = value;
-              message.reply('You changed the probability of being reacted to '+value+'%!');
-            }
-            else
-            {
-              message.reply('You do not have permissions to do this!');
-            }
-
-          } break;
-          case 'display':
-          {
-            message.channel.send('The probability of being "FUCK YOU"ed is '+chance+'%!\nThe probability of being reacteded is '+react+'%!');
-
-          } break;
-          case 'pic':
-          {
-            (function a()
-            {
-              getImgurImg(utils.getImgurId(utils.random(5,7))).then((resolve) =>
-              {
-                let embed = CreateEmbed(message.member.user,resolve);
-                //console.log("Embed created");
-                message.channel.send(embed);
-
-              }).catch((error) =>
-              {
-                //console.log(error.message);
-                a();
-              });
-            })();
-          } break;
-          case 'help':
-          {
-            message.channel.send(utils.help);
-
-          } break;
-          case 'mode':
-            {
-              if(allowedRole)
-              {
-                switch(input[2])
+              pool.connect().then(client =>
                 {
-                case 'normal':
+                  if((message.content.split("\"")).length - 1 < 2)
                   {
-                    mode = "normal";
-                    message.reply('Changed to normal mode');
-                  }break;
-                case 'special':
-                  {
-                    mode = "special";
-                    message.reply('Changed to special mode');
-                  }break;
-                default:
-                  {
-                    message.reply("Wrong mode!");
-                  } break;
-                }
-              }
-              else
-              {
-                message.reply('You do not have permissions to do this!');
-              }
-            } break;
-            case 'ping':
-              {
-                let who = input[2];
-                if(who == '<@!207964835999121411>') return;
-                //console.log(who);
-                active = true;
-                if(who == 'stop') active = false;
-                if(active)
-                {
-                  let spam = setTimeout(function send()
-                  {
-                    //console.log(active);
-                    if(active)
+                    message.reply("Use \" \" to remove your string");
+                    return;
+                  }
+                  let insertWord = message.content.substring(message.content.indexOf("\"")+1, message.content.lastIndexOf("\""));
+                  return client.query('DELETE from blacklist_words WHERE word = ($1)',[insertWord]).then(res=>
                     {
-                      message.channel.send(who);
-                      spam = setTimeout(send,2000);
-                    }
-                  }, 2000); 
-                }
-              } break;
-        default:
-          {
-          
-          } break;
-      }
-    }
-    else
-    {
-      if(message.author.bot != true)
-      {
-        if(banHorny.length > 0 && banHorny)
-        {
-          banHorny.forEach((e)=>
-          {
-            if(message.content.toLowerCase().includes(e))
-            {
-              message.delete();
-              return;
+                      client.release();
+                      banHorny.push(insertWord);
+                      console.warn(insertWord+" removed!");
+                      message.react("708697210711310460");
+                    }).catch(ee=>
+                      {
+                        client.release();
+                        console.error(ee);
+                      });
+                }).catch(e=> console.error("Pool connection error!",e));
             }
-          });
-        }
-        if(working && message.member.user.tag == "vaytvi#4838" && mode == "special")
-        {
-          if(utils.random(0,100)<=chance)
+            else
+            {
+              message.reply('You do not have permissions to do this!');
+            }
+          } break;
+        case 'select':
           {
-            message.reply("FUCK YOU");
+            pool.connect().then(client =>
+              {
+                return client.query('SELECT * FROM blacklist_words').then(res =>
+                  {
+                    client.release();
+                    let result = '';
+                    for (let row of res.rows) 
+                    {
+                      result += row['word']+'\n';
+                    }
+                    message.channel.send(result);
+                  }).catch(e=>
+                    {
+                      client.release();
+                      console.error(e);
+                    });
+              }).catch(e=> console.error("Pool connection error!",e));
+          } break;
+        case 'switch':
+        {
+          if(message.member.roles.cache.some(e=>e.name === "OWO" || e.name === "DJ"))
+          {
+            working = !working;
+            let state = working == true ? "on" : "off";
+            message.channel.send("'FUCK YOU' option turned "+ state);
           }
-          count++;
+          else
+          {
+            message.reply('You do not have permissions to do this!');
+          }
+        } break;
+        case 'random':
+        {
+          let min = input[2];
+          let max = input[3];
+          message.channel.send(utils.random(min, max));
+        } break;
+        case 'eval':
+        {
+          input.splice(0,2)
+          let a = message.content.substr(prefix.toString().length+command.length+2, message.content.length-1);
+          let output = eval(a);
+          if(output === undefined) return;
+          message.channel.send(output);
+        } break;
+        case 'chance':
+        {
+          if(allowedRole)
+          {
+            let value = input[2];
+            if(value[value.length-1] == "%")
+            {
+              value = value.slice(0,-1);
+            }
+            chance = value;
+            message.reply('You changed the probability of being "FUCK YOU"ed to '+value+'%!');
+          }
+          else
+          {
+            message.reply('You do not have permissions to do this!');
+          }
+
+        } break;
+        case 'react':
+        {
+          if(allowedRole)
+          {
+            let value = input[2];
+            if(value[value.length-1] == "%")
+            {
+              value = value.slice(0,-1);
+            }
+            react = value;
+            message.reply('You changed the probability of being reacted to '+value+'%!');
+          }
+          else
+          {
+            message.reply('You do not have permissions to do this!');
+          }
+
+        } break;
+        case 'display':
+        {
+          message.channel.send('The probability of being "FUCK YOU"ed is '+chance+'%!\nThe probability of being reacteded is '+react+'%!');
+
+        } break;
+        case 'pic':
+        {
+          (function a()
+          {
+            getImgurImg(utils.getImgurId(utils.random(5,7))).then((resolve) =>
+            {
+              let embed = CreateEmbed(message.member.user,resolve);
+              //console.log("Embed created");
+              message.channel.send(embed);
+
+            }).catch((error) =>
+            {
+              //console.log(error.message);
+              a();
+            });
+          })();
+        } break;
+        case 'help':
+        {
+          message.channel.send(utils.help);
+
+        } break;
+        case 'mode':
+          {
+            if(allowedRole)
+            {
+              switch(input[2])
+              {
+              case 'normal':
+                {
+                  mode = "normal";
+                  message.reply('Changed to normal mode');
+                }break;
+              case 'special':
+                {
+                  mode = "special";
+                  message.reply('Changed to special mode');
+                }break;
+              default:
+                {
+                  message.reply("Wrong mode!");
+                } break;
+              }
+            }
+            else
+            {
+              message.reply('You do not have permissions to do this!');
+            }
+          } break;
+          case 'ping':
+            {
+              let who = input[2];
+              if(who == '<@!207964835999121411>') return;
+              //console.log(who);
+              active = true;
+              if(who == 'stop') active = false;
+              if(active)
+              {
+                let spam = setTimeout(function send()
+                {
+                  //console.log(active);
+                  if(active)
+                  {
+                    message.channel.send(who);
+                    spam = setTimeout(send,2000);
+                  }
+                }, 2000); 
+              }
+            } break;
+      default:
+        {
         
-        }
-        if(working && mode == "normal")
+        } break;
+    }
+  }
+  else
+  {
+    if(message.author.bot != true)
+    {
+      if(banHorny.length > 0 && banHorny)
+      {
+        banHorny.forEach((e)=>
         {
-          if(utils.random(0,100)<=chance)
+          if(message.content.toLowerCase().includes(e))
           {
-            message.reply("FUCK YOU");
+            message.delete();
+            return;
           }
-          count++;
+        });
+      }
+      if(working && message.member.user.tag == "vaytvi#4838" && mode == "special")
+      {
+        if(utils.random(0,100)<=chance)
+        {
+          message.reply("FUCK YOU");
         }
+        count++;
+      
+      }
+      if(working && mode == "normal")
+      {
+        if(utils.random(0,100)<=chance)
+        {
+          message.reply("FUCK YOU");
+        }
+        count++;
       }
       if(utils.random(0,100)<=react)
       {
@@ -381,6 +394,14 @@ bot.on('message', message =>
       {
         message.reply(utils.getRandomEmote());
       }
+      if(message.attachments.size > 0)
+      {
+        message.attachments.forEach(a =>
+          {
+            if(a.name) console.log(a.name);
+          });
+      }
+    }
   }
 });
 let saveCountDB = setInterval(() =>
@@ -398,4 +419,5 @@ let saveCountDB = setInterval(() =>
         });
   }).catch(e=> console.error("Pool connection error!",e));
 },600000);
+
 bot.login(process.env.token);
