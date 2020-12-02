@@ -122,6 +122,7 @@ bot.on('message', message =>
         {
           try 
           {
+            console.log(lastImage);
               Vibrant.from(lastImage).getPalette().then((palette) =>
               {
                 message.channel.send(palette);
