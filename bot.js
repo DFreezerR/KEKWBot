@@ -398,7 +398,13 @@ bot.on('message', message =>
       {
         message.attachments.forEach(a =>
           {
-            if(a.name) console.log(a.name);
+            if(a.name)
+            {
+              if(a.name.endsWith('.png') || a.name.endsWith('.jpg') || a.name.endsWith('.bmp'))
+              {
+                console.log({a});
+              };
+            }
           });
       }
     }
