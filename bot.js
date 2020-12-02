@@ -6,7 +6,6 @@ const {  Pool } = require('pg');
 const utils = require('./utils');
 var Vibrant = require('node-vibrant');
 const fetch = require('node-fetch');
-app.use(express.json());
 const config = require(configPath);
 const bot = new Discord.Client();
 const prefix = config.prefix;
