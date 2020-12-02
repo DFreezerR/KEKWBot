@@ -7,6 +7,7 @@ const utils = require('./utils');
 var Vibrant = require('node-vibrant');
 const express = require('express');
 const app = express();
+app.use(express.json());
 const config = require(configPath);
 const bot = new Discord.Client();
 const prefix = config.prefix;
