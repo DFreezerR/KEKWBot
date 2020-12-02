@@ -29,7 +29,6 @@ const dbConfig =
   idleTimeoutMillis: 1000
 }
 const pool = new Pool(dbConfig);
-//const client = new Client(dbConfig);
 pool.on('error', (err, client) => 
 {
   console.error('Unexpected error on idle client', err);
@@ -124,6 +123,7 @@ bot.on('message', message =>
         {
           try 
           {
+            console.log(lastImage);
             app.get(lastImage, function(req,res)
             {
               console.log(req.body);
