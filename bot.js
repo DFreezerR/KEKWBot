@@ -126,6 +126,8 @@ bot.on('message', message =>
             {
               const response = await fetch(lastImage);
               const buffer = await response.buffer();
+              console.log(response);
+              console.log(buffer);
               Vibrant.from(buffer).getPalette().then((palette) =>
               {
                 message.channel.send(palette);
