@@ -5,6 +5,7 @@ const configPath = './config.json';
 const {  Pool } = require('pg');
 const utils = require('./utils');
 var Vibrant = require('node-vibrant');
+const Canvas = require('canvas');
 const fetch = require('node-fetch');
 const config = require(configPath);
 const bot = new Discord.Client();
@@ -126,11 +127,15 @@ bot.on('message', message =>
             {
               const response = await fetch(lastImage);
               const buffer = await response.buffer();
-              console.log(response);
-              console.log(buffer);
               Vibrant.from(buffer).getPalette().then((palette) =>
               {
-                message.channel.send(`RGB:${palette.Vibrant.rgb}`);
+                const canvas = Canvas.createCanvas(300, 300);
+                const ctx = canvas.getContext('2d');
+                let img = new Image();
+                img.style.backgroundColor = `rgb(${palette.Vibrant.rgb.toString()})`;
+                ctx.drawImage(img, 0, 0);
+                const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'colors.png');
+                message.channel.send(attachment);
               });
             })()
           } catch (error) 
