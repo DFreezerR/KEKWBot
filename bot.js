@@ -130,8 +130,7 @@ bot.on('message', message =>
               console.log(buffer);
               Vibrant.from(buffer).getPalette().then((palette) =>
               {
-                console.log(palette);
-                message.channel.send(palette);
+                message.channel.send(`RGB:${palette.Vibrant.rgb}`);
               });
             })()
           } catch (error) 
